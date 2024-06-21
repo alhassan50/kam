@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation';
 
 type Link = {
     title: string;
@@ -8,11 +11,13 @@ type Link = {
 }
 
 function NavLink({link}: {link: Link}) {
+    const pathname = usePathname()
+
   return (
     <div className={`capitalize group transition-all duration-200 hover:bg-tertiary ${link.href === '/go-premium' && 'border-t border-b'}`}>
         <Link 
             href={link.href} 
-            className='py-3 px-6 min-w-full flex items-center gap-2'
+            className={`py-3 px-6 min-w-full flex items-center gap-2 ${link.href === pathname ? 'active-link' : null}`}
         >
             <figure className='w-7 h-7 group-hover:scale-125 transition-all duration-200 rounded-[4px]'>
                 <Image 
