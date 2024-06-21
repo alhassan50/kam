@@ -10,15 +10,23 @@ function ThemeColor() {
 
     //init theme from from local storage or operating system
     const [theme, setTheme] = useState<"dark" | "light">(() => {
-        const storedTheme = localStorage.getItem('kamTheme') as 'dark' | 'light' | null
-        return storedTheme ? storedTheme : getSystemTheme()
+        // Check if localStorage is available
+        if (typeof window !== 'undefined') {
+            const storedTheme = localStorage.getItem('kamTheme') as 'dark' | 'light' | null;
+            return storedTheme ? storedTheme : getSystemTheme();
+        } else {
+            // Fallback to a default theme if localStorage is not available
+            return 'light'; // Or any default theme you prefer
+        }
     })
 
     //stores website preferred theme in local storage
     const toggleTheme = () => {
         setTheme((prevTheme) => {
             const newTheme = prevTheme === 'dark' ? 'light' : 'dark'
-            localStorage.setItem('kamTheme', newTheme)
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('kamTheme', newTheme);
+            }
             return newTheme
         })
     }
@@ -26,7 +34,7 @@ function ThemeColor() {
      //listen for change in operating system theme
      useEffect(() => {
         const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-            if (!localStorage.getItem('kamTheme')) {
+            if (typeof window !== 'undefined' && !localStorage.getItem('kamTheme')) {
                 setTheme(e.matches ? 'dark' : 'light');
             }
         };
