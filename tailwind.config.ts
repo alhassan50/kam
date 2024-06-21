@@ -12,7 +12,9 @@ const config: Config = {
       colors: {
         primary: 'var(--primary-color)',
         secondary: 'var(--secondary-color)',
-        tertiary: 'var(--tertiary-color)'
+        tertiary: 'var(--tertiary-color)',
+        sideBarBg: 'var(--side-bar-bg)',
+        hoverPrimary: 'var(--hover-primary-color)'
       }
     },
   },
