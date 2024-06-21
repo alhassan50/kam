@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #333;
+  --secondary-color: #fff;
+  --tertiary-color: #eee;
+
+  --side-bar-bg: #fafafa;
+  --hover-primary-color: #eee;
+  --active-nav-link-bg: #424242;
+  
+  --active-text: var(--secondary-color)
+}
+
+:root[data-theme='dark'] {
+  --primary-color: #fff;
+  --secondary-color: #333;
+  
+  --side-bar-bg: #171717;
+  --hover-primary-color: #212121;
+
+  --active-text: var(--primary-color)
+}
+
+body {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+@layer utilities { 
+  .active-link {
+    @apply bg-[var(--active-nav-link-bg)] text-[var(--active-text)] font-medium
+  }
+  .active-link figure {
+    @apply scale-125
+  }
+}
