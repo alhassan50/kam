@@ -17,7 +17,7 @@ function NavLink({link}: {link: Link}) {
     const isSideBarOpened = useSelector(selectisSideBarOpened)
 
   return (
-    <div className={`capitalize group transition-all duration-200 hover:bg-tertiary ${link.href === '/go-premium' && 'border-t border-b'}`}>
+    <div className={`capitalize group transition-all duration-200 hover:bg-hoverPrimary ${link.href === '/go-premium' && 'border-t border-b'}`}>
         <Link 
             href={link.href} 
             className={`py-3 px-6 min-w-full flex flex-nowrap items-center gap-2 ${link.href === pathname ? 'active-link' : null}`}
