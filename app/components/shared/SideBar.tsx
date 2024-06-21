@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 function SideBar() {
     const isSideBarOpened = useSelector(selectisSideBarOpened)
   return (
-    <div className={`${isSideBarOpened ? 'w-[250px]' : 'w-[85px]'} overflow-hidden h-[calc(100vh-53px)] bg-[#fafafa] border-r pt-2 transition-all duration-200`}>
+    <div className={`${isSideBarOpened ? 'w-[250px]' : 'w-[85px]'} overflow-hidden h-[calc(100vh-53px)] bg-sideBarBg border-r pt-2 transition-all duration-200`}>
         <div className={`w-[250px] h-full`}>
             <ul className=''>
                 {navLinks.map(link => (

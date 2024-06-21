@@ -6,14 +6,23 @@
   --primary-color: #333;
   --secondary-color: #fff;
   --tertiary-color: #eee;
+
+  --side-bar-bg: #fafafa;
+  --hover-primary-color: #eee;
+  --active-nav-link-bg: #424242;
+  
+  --active-text: var(--secondary-color)
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --primary-color: #fff;
-    --secondary-color: #333;
-  }
-} */
+:root[data-theme='dark'] {
+  --primary-color: #fff;
+  --secondary-color: #333;
+  
+  --side-bar-bg: #171717;
+  --hover-primary-color: #212121;
+
+  --active-text: var(--primary-color)
+}
 
 body {
   background-color: var(--secondary-color);
@@ -22,7 +31,7 @@ body {
 
 @layer utilities { 
   .active-link {
-    @apply bg-[var(--primary-color)] text-[var(--secondary-color)] font-medium
+    @apply bg-[var(--active-nav-link-bg)] text-[var(--active-text)] font-medium
   }
   .active-link figure {
     @apply scale-125
