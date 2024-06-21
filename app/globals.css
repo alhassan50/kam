@@ -20,4 +20,11 @@ body {
   color: var(--primary-color);
 }
 
-@layer utilities { }
+@layer utilities { 
+  .active-link {
+    @apply bg-[var(--primary-color)] text-[var(--secondary-color)] font-medium
+  }
+  .active-link figure {
+    @apply scale-125
+  }
+}
