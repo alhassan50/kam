@@ -8,49 +8,42 @@ import { useSelector } from "react-redux"
 function ThemeColor() {
     const isSideBarOpened = useSelector(selectisSideBarOpened)
 
-    //init theme from from local storage or operating system
-    const [theme, setTheme] = useState<"dark" | "light">(() => {
-        // Check if localStorage is available
-        if (typeof window !== 'undefined') {
-            const storedTheme = localStorage.getItem('kamTheme') as 'dark' | 'light' | null;
-            return storedTheme ? storedTheme : getSystemTheme();
-        } else {
-            // Fallback to a default theme if localStorage is not available
-            return 'light'; // Or any default theme you prefer
-        }
-    })
+    // Initialize theme state
+    const [theme, setTheme] = useState<"dark" | "light">('light')
 
-    //stores website preferred theme in local storage
+    useEffect(() => {
+        // Set theme based on localStorage or system preference on client-side
+        const storedTheme = localStorage.getItem('kamTheme') as 'dark' | 'light' | null;
+        const initialTheme = storedTheme ? storedTheme : getSystemTheme();
+        setTheme(initialTheme)
+    }, [])
+
     const toggleTheme = () => {
         setTheme((prevTheme) => {
             const newTheme = prevTheme === 'dark' ? 'light' : 'dark'
-            if (typeof window !== 'undefined') {
-                localStorage.setItem('kamTheme', newTheme);
-            }
+            localStorage.setItem('kamTheme', newTheme)
             return newTheme
         })
     }
 
-     //listen for change in operating system theme
-     useEffect(() => {
+    useEffect(() => {
         const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-            if (typeof window !== 'undefined' && !localStorage.getItem('kamTheme')) {
-                setTheme(e.matches ? 'dark' : 'light');
+            if (!localStorage.getItem('kamTheme')) {
+                setTheme(e.matches ? 'dark' : 'light')
             }
-        };
+        }
 
-        const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        darkMediaQuery.addEventListener('change', handleSystemThemeChange);
+        const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        darkMediaQuery.addEventListener('change', handleSystemThemeChange)
 
         return () => {
-            darkMediaQuery.removeEventListener('change', handleSystemThemeChange);
-        };
-    }, []);
+            darkMediaQuery.removeEventListener('change', handleSystemThemeChange)
+        }
+    }, [])
 
-    //adds preffered theme as attribute to document
     useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
-    }, [theme]);
+        document.documentElement.setAttribute('data-theme', theme)
+    }, [theme])
 
 
   return (
