@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #333;
+  --primary-color: #171717;
   --secondary-color: #fff;
   --tertiary-color: #eee;
 
@@ -16,7 +16,7 @@
 
 :root[data-theme='dark'] {
   --primary-color: #fff;
-  --secondary-color: #333;
+  --secondary-color: #171717;
   
   --side-bar-bg: #171717;
   --hover-primary-color: #212121;
@@ -29,11 +29,23 @@ body {
   color: var(--primary-color);
 }
 
+main {
+  background-color: #fff
+}
+
+[data-theme='dark'] main {
+  background-color: #333
+}
+
 @layer utilities { 
   .active-link {
     @apply bg-[var(--active-nav-link-bg)] text-[var(--active-text)] font-medium
   }
   .active-link figure {
     @apply scale-125
+  }
+
+  .width-transition {
+    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Example transition duration and timing function */
   }
 }
