@@ -21,6 +21,7 @@ function NavLink({link}: {link: Link}) {
         <Link 
             href={link.href} 
             className={`py-3 px-6 min-w-full flex flex-nowrap items-center gap-2 ${link.href === pathname ? 'active-link' : null}`}
+            title={link.title}
         >
             <figure className='w-7 h-7 group-hover:scale-125 transition-all duration-200 rounded-[4px]'>
                 <Image 
