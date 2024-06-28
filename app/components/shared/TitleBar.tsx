@@ -8,7 +8,7 @@ function TitleBar() {
   const activeNavLink = navLinks.find(link => link.href === pathname)
 
   return (
-    <div>
+    <div className='hidden md:block'>
         <h3 className='font-medium capitalize'>
           {activeNavLink ? activeNavLink.title : 'Not Found'}
         </h3>
