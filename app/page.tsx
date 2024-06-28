@@ -6,6 +6,6 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main>home</main>
+    <main className="p-4 flex-1">home</main>
   );
 }
