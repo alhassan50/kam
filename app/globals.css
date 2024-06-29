@@ -34,10 +34,18 @@ main {
 }
 
 [data-theme='dark'] main {
-  background-color: #333
+  background-color: #212121
 }
 
 @layer utilities { 
+  h1 {
+    @apply text-[24px] md:text-[36px]
+  }
+
+  main {
+    @apply p-4 flex-1
+  }
+
   .active-link {
     @apply bg-[var(--active-nav-link-bg)] text-[var(--active-text)] font-medium
   }
