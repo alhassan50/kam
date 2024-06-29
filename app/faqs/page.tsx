@@ -14,7 +14,7 @@ function Faqs() {
     <main>
       <div>
         <h1>Frequently Asked Questions</h1>
-        <p className='mt-2'>
+        <p className='mt-2 font-extralight'>
           Find answers to the most common questions about the Knowledge Assessment Module (KAM). For further assistance, please contact our support team.
         </p>
       </div>
@@ -22,17 +22,17 @@ function Faqs() {
         {faqs.map((faq, index) => (
           <li
             key={faq.question}
-            className="p-5 border rounded-[4px] border-[rgba(255,255,255,0.2)] cursor-pointer hover:bg-[#2f2f2f]"
+            className="p-5 border rounded-[4px] border-[var(--bg-card)] cursor-pointer hover:bg-[var(--hover-card)]"
             onClick={() => handleToggle(index)}
           >
-            <div className="flex justify-between">
+            <div className="flex justify-between gap-5">
               <h3>{faq.question}</h3>
               <figure className="text-lg">{openIndex === index ? '-' : '+'}</figure>
             </div>
             {openIndex === index && (
               <div>
-                <hr className="border-[rgba(255,255,255,0.2)] my-5" />
-                <p>{faq.answer}</p>
+                <hr className="border-[var(--bg-card)] my-5" />
+                <p className='font-extralight'>{faq.answer}</p>
               </div>
             )}
           </li>
