@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: 'Donate',
 };
 
-
 function Donate() {
   return (
     <main>
