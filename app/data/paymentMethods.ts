@@ -1,0 +1,1 @@
+export const paymentMethods = ["MTN MoMo", "Voda Cash", "AirtelTigo Cash", "Glo Mobile Money"]
