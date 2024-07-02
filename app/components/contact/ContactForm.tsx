@@ -2,12 +2,6 @@
 
 import { useForm, SubmitHandler} from "react-hook-form";
 
-type ContactFormData = {
-  fullName: string,
-  emailAddress: string,
-  message: string
-}
-
 function ContactForm() {
     const {
         register,

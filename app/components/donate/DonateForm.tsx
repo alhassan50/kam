@@ -4,15 +4,6 @@ import { paymentMethods } from "@/app/data/paymentMethods";
 import { useState } from "react";
 import { useForm, SubmitHandler} from "react-hook-form";
 
-type FormData = {
-  anonymousDonor: boolean,
-  fullName: string,
-  phoneNumber: string,
-  emailAddress: string,
-  amount: string,
-  paymentMethod: string
-}
-
 function DonateForm() {
   const {
     register,
@@ -23,7 +14,7 @@ function DonateForm() {
     setValue,
     clearErrors,
     reset,
-  } = useForm<FormData>({
+  } = useForm<DonateFormData>({
     defaultValues: {
       anonymousDonor: false,
       fullName: '',
@@ -58,7 +49,7 @@ function DonateForm() {
     setStep(prevStepValue => prevStepValue - 1)
   }
 
-  const clearFieldError = (fieldName: keyof FormData, value: string) => {
+  const clearFieldError = (fieldName: keyof DonateFormData, value: string) => {
     setValue(fieldName, value);
     clearErrors(fieldName);
   }
@@ -74,7 +65,7 @@ function DonateForm() {
     }
   }
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<DonateFormData> = (data) => {
     console.log(data); // Handle form submission here
   };
 
