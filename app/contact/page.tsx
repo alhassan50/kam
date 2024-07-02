@@ -45,7 +45,7 @@ function Contact() {
               </div>
             </div>
 
-            <ul className='grid sm:grid-cols-2 md:grid-cols-3 mt-5 gap-2'>
+            <ul className='grid sm:grid-cols-2 mt-5 gap-2'>
               {contactInfo.map(info => (
                 <li 
                   className='p-4 border rounded-[4px] border-[var(--bg-card)] hover:bg-[var(--hover-card)]'
