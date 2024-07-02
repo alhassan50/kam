@@ -14,7 +14,7 @@ function Faqs() {
     <main>
       <div>
         <h1>Frequently Asked Questions</h1>
-        <p className='mt-2 font-extralight'>
+        <p className='mt-2'>
           Find answers to the most common questions about the Knowledge Assessment Module (KAM). For further assistance, please contact our support team.
         </p>
       </div>

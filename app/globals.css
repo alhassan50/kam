@@ -48,8 +48,20 @@ main {
     @apply text-[24px] md:text-[36px]
   }
 
+  p {
+    @apply font-extralight
+  }
+
   main {
     @apply p-4 flex-1
+  }
+
+  input {
+    @apply text-black
+  }
+
+  .btn-primary {
+    @apply bg-black p-4 rounded-[4px] text-[#fff]
   }
 
   .active-link {
