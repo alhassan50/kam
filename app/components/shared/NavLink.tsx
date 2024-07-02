@@ -6,12 +6,6 @@ import { usePathname } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { selectisSideBarOpened } from '@/app/redux/slices/sideBarSlice';
 
-type Link = {
-    title: string;
-    href: string;
-    icon: string;
-}
-
 function NavLink({link}: {link: Link}) {
     const pathname = usePathname()
     const isSideBarOpened = useSelector(selectisSideBarOpened)

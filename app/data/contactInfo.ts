@@ -1,8 +1,3 @@
-type ContactInfo = {
-    title: string;
-    description: string;
-}
-  
 export const contactInfo: ContactInfo[] = [
     {
       title: "Customer Support",
