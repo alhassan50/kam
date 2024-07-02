@@ -11,7 +11,10 @@
   --hover-primary-color: #eee;
   --active-nav-link-bg: #424242;
   
-  --active-text: var(--secondary-color)
+  --active-text: var(--secondary-color);
+
+  --hover-card: #f9f9f9;
+  --bg-card: rgba(0,0,0,0.1);
 }
 
 :root[data-theme='dark'] {
@@ -21,7 +24,10 @@
   --side-bar-bg: #171717;
   --hover-primary-color: #212121;
 
-  --active-text: var(--primary-color)
+  --active-text: var(--primary-color);
+
+  --hover-card: #2f2f2f;
+  --bg-card: rgba(255,255,255,0.2);
 }
 
 body {
@@ -34,10 +40,30 @@ main {
 }
 
 [data-theme='dark'] main {
-  background-color: #333
+  background-color: #212121
 }
 
 @layer utilities { 
+  h1 {
+    @apply text-[24px] md:text-[36px]
+  }
+
+  p {
+    @apply font-extralight
+  }
+
+  main {
+    @apply p-4 flex-1
+  }
+
+  input {
+    @apply text-black
+  }
+
+  .btn-primary {
+    @apply bg-black p-4 rounded-[4px] text-[#fff]
+  }
+
   .active-link {
     @apply bg-[var(--active-nav-link-bg)] text-[var(--active-text)] font-medium
   }
