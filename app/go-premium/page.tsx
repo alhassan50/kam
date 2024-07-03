@@ -28,7 +28,22 @@ function GoPremium() {
             className="btn-primary flex justify-center items-center gap-2 mx-auto mt-5 px-10"
         >
             Go Premium
-            <Arrow width={28} />
+            <svg 
+                viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" 
+                className={`w-[28px]`}
+            >
+                <defs>
+                <style>
+                    {`.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}`}
+                </style>
+                </defs>
+                <title>arrow-right</title>
+                <g id="arrow-right">
+                <line className="cls-1" x1="29.08" x2="3.08" y1="16" y2="16" />
+                <line className="cls-1" x1="29.08" x2="25.08" y1="16" y2="21" />
+                <line className="cls-1" x1="29.08" x2="25.08" y1="16" y2="11" />
+                </g>
+            </svg>
         </button>
       </div>
 
