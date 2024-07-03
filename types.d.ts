@@ -24,3 +24,17 @@ type ContactInfo = {
     title: string;
     description: string;
 }
+
+type Feature = {
+    feature: {
+        name: string;
+    };
+    supported: boolean;
+};
+
+type Plan =  {
+    name: string;
+    features: Feature[]
+    recommended: boolean;
+    price: string;
+}

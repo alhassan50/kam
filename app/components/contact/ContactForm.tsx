@@ -1,6 +1,7 @@
 'use client'
 
 import { useForm, SubmitHandler} from "react-hook-form";
+import Arrow from "../shared/Arrow";
 
 function ContactForm() {
     const {
@@ -102,24 +103,7 @@ function ContactForm() {
                         className="btn-primary flex justify-center items-center gap-2 mt-3"
                     >
                         Send Message
-
-                        <svg 
-                            viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" 
-                            className="w-[32px]"
-                        >
-                            <defs>
-                            <style>
-                                {`.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}`}
-                            </style>
-                            </defs>
-                            <title>arrow-right</title>
-                            <g id="arrow-right">
-                            <line className="cls-1" x1="29.08" x2="3.08" y1="16" y2="16" />
-                            <line className="cls-1" x1="29.08" x2="25.08" y1="16" y2="21" />
-                            <line className="cls-1" x1="29.08" x2="25.08" y1="16" y2="11" />
-                            </g>
-                        </svg>
-
+                        <Arrow width={32} />
                     </button>
                 </form>
             </div>
