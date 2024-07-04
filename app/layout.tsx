@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/shared/Header";
 import SideBar from "./components/shared/SideBar";
 import ReduxProvider from "./redux/ReduxProvider/ReduxProvider";
+import EmptySideBar from "./components/shared/EmptySideBar";
 
 const poppins = Poppins({ 
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
           <Header />
           <div className="flex flex-col md:flex-row overflow-x-hidden">
             <SideBar />
+            <EmptySideBar />
             {children}
           </div>
         </ReduxProvider>
