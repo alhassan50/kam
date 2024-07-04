@@ -1,7 +1,7 @@
 function PricingCard({plan}: {plan: Plan}) {
   return (
     <div
-        className={`p-5 lg:p-10 rounded-[4px] border border-[var(--bg-card)] hover:bg-[var(--hover-card)] ${plan.recommended && 'bg-black text-white border-black hover:bg-[var(--prem-card-bg)]'}`}
+        className={`p-5 xl:p-10 rounded-[4px] max-w-[500px] mx-auto border border-[var(--bg-card)] hover:bg-[var(--hover-card)] ${plan.recommended && 'bg-black text-white border-black hover:bg-[var(--prem-card-bg)]'}`}
         >
         <h3 className='text-xl'>
             {plan.name} {plan.recommended && '🌟'}

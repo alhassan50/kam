@@ -39,6 +39,5 @@ export const plans = [
       price: "$19.99/month"
     }
   ];
-  
-  console.log(plans);
+
   
