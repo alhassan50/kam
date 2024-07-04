@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "./components/shared/Header";
-import SideBar from "./components/shared/SideBar";
+import SideBar, { Div } from "./components/shared/SideBar";
 import ReduxProvider from "./redux/ReduxProvider/ReduxProvider";
 
 const poppins = Poppins({ 
@@ -29,6 +29,7 @@ export default function RootLayout({
           <Header />
           <div className="flex flex-col md:flex-row overflow-x-hidden">
             <SideBar />
+            <Div />
             {children}
           </div>
         </ReduxProvider>
