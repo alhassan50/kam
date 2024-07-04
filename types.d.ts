@@ -38,3 +38,8 @@ type Plan =  {
     recommended: boolean;
     price: string;
 }
+
+type FAQ = {
+    question: string;
+    answer: string;
+}
