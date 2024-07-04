@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 function GoPremium() {
   const Hero = () => (
-    <section className='text-center md:pt-20'>
+    <section className='text-center pt-10'>
       <div>
         <h1 className=''>
           Unlock Exclusive Features with KAM Premium 💎
@@ -28,22 +28,7 @@ function GoPremium() {
             className="btn-primary flex justify-center items-center gap-2 mx-auto mt-5 px-10"
         >
             Go Premium
-            <svg 
-                viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" 
-                className={`w-[28px]`}
-            >
-                <defs>
-                <style>
-                    {`.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}`}
-                </style>
-                </defs>
-                <title>arrow-right</title>
-                <g id="arrow-right">
-                <line className="cls-1" x1="29.08" x2="3.08" y1="16" y2="16" />
-                <line className="cls-1" x1="29.08" x2="25.08" y1="16" y2="21" />
-                <line className="cls-1" x1="29.08" x2="25.08" y1="16" y2="11" />
-                </g>
-            </svg>
+            <Arrow width={32} />
         </button>
       </div>
 
@@ -58,7 +43,7 @@ function GoPremium() {
           Upgrade your learning
         </h2>
 
-        <ul className='grid gap-5 sm:grid-cols-2 mt-10 text-left md:max-w-[95%] xl:max-w-[85%] 2xl:max-w-[80px] mx-auto'>
+        <ul className='grid gap-5 lg:grid-cols-2 mt-10 text-left md:max-w-[95%] xl:max-w-[85%] 2xl:max-w-[80%] mx-auto'>
           {plans.map(plan => (
             <li 
               key={plan.name}
