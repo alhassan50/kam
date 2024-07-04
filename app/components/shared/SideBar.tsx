@@ -26,4 +26,11 @@ function SideBar() {
   )
 }
 
+export const Div = () => {
+    const isSideBarOpened = useSelector(selectisSideBarOpened)
+    return (
+        <div className={`${isSideBarOpened ? 'w-[250px]' : 'w-[0px] md:w-[85px]'} h-[calc(100vh-53px)] width-transition hidden md:block`}></div>
+    )
+}
+
 export default SideBar
