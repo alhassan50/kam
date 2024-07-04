@@ -1,15 +1,12 @@
-'use client'
-
-import { useState } from 'react';
 import { faqs } from '../data/faqs';
+import FAQCard from '../components/faqs/FAQCard';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'FAQs',
+};
 
 function Faqs() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const handleToggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <main>
       <div>
@@ -22,19 +19,12 @@ function Faqs() {
         {faqs.map((faq, index) => (
           <li
             key={faq.question}
-            className="p-5 border rounded-[4px] border-[var(--bg-card)] cursor-pointer hover:bg-[var(--hover-card)]"
-            onClick={() => handleToggle(index)}
+            
           >
-            <div className="flex justify-between gap-5">
-              <h3>{faq.question}</h3>
-              <figure className="text-lg">{openIndex === index ? '-' : '+'}</figure>
-            </div>
-            {openIndex === index && (
-              <div>
-                <hr className="border-[var(--bg-card)] my-5" />
-                <p className='font-extralight'>{faq.answer}</p>
-              </div>
-            )}
+            <FAQCard
+              index={index} 
+              faq={faq}
+            />
           </li>
         ))}
       </ul>
