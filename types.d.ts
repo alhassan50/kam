@@ -36,7 +36,8 @@ type Plan =  {
     name: string;
     features: Feature[]
     recommended: boolean;
-    price: string;
+    price: number;
+    duration: string;
 }
 
 type FAQ = {

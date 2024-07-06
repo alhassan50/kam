@@ -4,7 +4,7 @@ function PricingCard({plan}: {plan: Plan}) {
         className={`p-5 xl:p-10 rounded-[4px] max-w-[500px] mx-auto border border-[var(--bg-card)] hover:bg-[var(--hover-card)] ${plan.recommended && 'bg-black text-white border-black hover:bg-[var(--prem-card-bg)]'}`}
         >
         <h3 className='text-xl'>
-            {plan.name} {plan.recommended && '🌟'}
+            {plan.name} {plan.recommended && '💎'}
         </h3>
 
         <div className='my-7 h-[.1px] bg-[var(--bg-card)] '></div>
@@ -25,8 +25,15 @@ function PricingCard({plan}: {plan: Plan}) {
                 </li>
             ))}
             </ul>
+
+            <div>
+                <h1 
+                    title={`${plan.price} ghana cedis per ${plan.duration}`}
+                    className='my-5'>¢{plan.price}/{plan.duration}</h1>
+            </div>
+                
             <button 
-            className={`w-full mt-10 p-3 rounded-[4px] border md:max-w-[200px] ${plan.recommended ? 'border-white hover:bg-white hover:text-black' : 'border-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-[var(--secondary-color)]'}`}
+            className={`w-full p-3 rounded-[4px] border md:max-w-[200px] ${plan.recommended ? 'border-white hover:bg-white hover:text-black' : 'border-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-[var(--secondary-color)]'}`}
             type='button'
             >
                 Choose Plan

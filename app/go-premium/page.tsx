@@ -16,7 +16,7 @@ function GoPremium() {
     <section className='text-center pt-10'>
       <div>
         <h1 className=''>
-          Unlock Exclusive Features with KAM Premium 💎
+          Unlock Exclusive Features with KAM Premium
         </h1>
 
         <p className='mt-2'>
