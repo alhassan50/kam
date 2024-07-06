@@ -2,7 +2,7 @@ import { premiumAdvantages } from '@/app/data/premiumAdvantages'
 
 function PremiumPerks() {
   return (
-    <ul className='grid gap-7 lg:gap-4 xl:gap-10 lg:grid-cols-3 mt-10 md:max-w-[95%] 2xl:max-w-[80%] mx-auto text-left'>
+    <ul className='grid gap-7 lg:gap-4 xl:gap-10 sm:grid-cols-2 lg:grid-cols-3 mt-10 md:max-w-[95%] 2xl:max-w-[80%] mx-auto text-left'>
         {premiumAdvantages.map(advantage => (
           <li
             key={advantage.title}
