@@ -53,7 +53,7 @@ main {
   }
   
   h2 {
-    @apply text-[22px] md:text-[28px]
+    @apply text-[20px] md:text-[26px]
   }
 
   p {
