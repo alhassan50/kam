@@ -44,3 +44,9 @@ type FAQ = {
     question: string;
     answer: string;
 }
+
+type Feature = {
+    title: string;
+    description: string;
+    link: null | string;
+}
