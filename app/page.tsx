@@ -3,6 +3,7 @@ import Arrow from "./components/shared/Arrow";
 import { features } from "./data/features";
 import Link from "next/link";
 import { testimonials } from "./data/testimonials";
+import { upgrades } from "./data/upgrades";
 
 export const metadata: Metadata = {
   title: 'Home | KAM',
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   const Hero = () => (
-    <section className='text-center pt-10 grid gap-3'>
+    <section className='text-center py-10 grid gap-3'>
       <h1 className="mx-auto">
         <span className="text-black">Empower</span> Your Learning Journey with <br /> the <span className="text-black">AI-Enhanced <span title="Knowledge Enhancement Module" className="cursor-pointer">KAM</span></span>
       </h1>
@@ -34,16 +35,18 @@ export default function Home() {
   )
   
   const AboutKam = () => (
-    <section className='text-center pt-10 grid gap-3'>
-      <h1 className="mx- text-left lg:text-center">
-        What is the <span className="text-black">Knowledge Assessment Module?</span>
-      </h1>
+    <section className='py-10 grid gap-3'>
+      <div className="">
+        <h1 className="lg:w-[90%] mx-auto text-left">
+          What is the <span className="text-black">Knowledge Assessment Module?</span>
+        </h1>
+      </div>
 
-      <p className='mt-5 text-left lg:max-w-[90%] mx-auto'>
+      <p className='mt-8 text-left lg:w-[90%] mx-auto'>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat recusandae architecto nulla placeat. Eligendi natus laboriosam dolor illo. Aliquam nisi aperiam repellendus quod, est obcaecati dolor saepe reiciendis natus pariatur!
       </p>
      
-      <p className='mt-2 text-left lg:max-w-[90%] mx-auto'>
+      <p className='mt-2 text-left lg:w-[90%] mx-auto'>
         Accusantium aspernatur pariatur enim distinctio inventore itaque? Aliquid corporis odit quasi ratione nobis praesentium rerum adipisci consectetur asperiores nostrum? Esse laboriosam officia consectetur error excepturi laudantium deleniti, magni labore nostrum!
       </p>
 
@@ -76,12 +79,12 @@ export default function Home() {
   )
 
   const Testimonial = () => (
-    <section className='text-center pt-10 md:w-[90%] mx-auto grid gap-3'>
+    <section className='text-center py-10 md:w-[90%] mx-auto grid gap-3'>
       <h1 className="mx- text-left sm:text-center">
         <span className="text-black">KAM</span> Impacting Lives
       </h1>
 
-      <ul className="grid gap-5 sm:grid-cols-2 mt-5">
+      <ul className="grid gap-5 sm:grid-cols-2 mt-8">
         {testimonials.map(testimonial => (
           <li key={testimonial.feedback}>
             <div className="p-5 h-full flex flex-col justify-between border rounded border-[var(--bg-card)] hover:bg-[var(--hover-card)]">
@@ -108,12 +111,41 @@ export default function Home() {
     </section>
   )
 
+  const Upcoming = () => (
+    <section className="py-10 md:w-[90%] mx-auto grid gap-3">
+      <h1 className="lg:text-center">
+        What&apos;s Next for You? 
+      </h1>
+
+      <ul className="grid gap-5 mt-8 md:grid-cols-2 lg:grid-cols-3">
+        {upgrades.map(upgrade => (
+          <li key={upgrade.title}>
+            <div>
+              <figure className="h-10 w-10 bg-black rounded">
+
+              </figure>
+
+              <h3 className="mt-2">
+                {upgrade.title}
+              </h3>
+
+              <p className="mt-2 text-sm">
+                {upgrade.description}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+
   return (
     <main>
       <div>
         <Hero />
         <AboutKam />
         <Testimonial />
+        <Upcoming />
       </div>
     </main>
   );
