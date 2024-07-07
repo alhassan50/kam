@@ -23,7 +23,7 @@ export default function Home() {
           type="button"
           className="btn-primary flex justify-center items-center gap-2 mx-auto mt-5 px-10"
       >
-          Go Premium
+          Get Started
           <Arrow width={32} />
       </button>
 
