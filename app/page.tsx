@@ -39,7 +39,7 @@ export default function Home() {
         What is the <span className="text-black">Knowledge Assessment Module?</span>
       </h1>
 
-      <p className='mt-2 text-left lg:max-w-[90%] mx-auto'>
+      <p className='mt-5 text-left lg:max-w-[90%] mx-auto'>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat recusandae architecto nulla placeat. Eligendi natus laboriosam dolor illo. Aliquam nisi aperiam repellendus quod, est obcaecati dolor saepe reiciendis natus pariatur!
       </p>
      
