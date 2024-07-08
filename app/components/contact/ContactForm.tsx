@@ -38,7 +38,7 @@ function ContactForm() {
         </div>
 
     return (
-        <section className="order-first lg:order-last">
+        <div className="order-first lg:order-last">
             <div className='max-w-[500px] mx-auto p-5 md:p-10 rounded-[4px] group border-[var(--bg-card)] bg-[var(--hover-card)]'>
                 <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
                     <FormHeader />
@@ -107,7 +107,7 @@ function ContactForm() {
                     </button>
                 </form>
             </div>
-        </section>
+        </div>
     )
 }
 
