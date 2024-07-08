@@ -1,7 +1,7 @@
 import Arrow from "../shared/Arrow"
 
 const Hero = () => (
-    <section className='text-center py-10 grid gap-3'>
+    <section className='text-center grid gap-3'>
       <h1 className="mx-auto">
         <span className="text-black">Empower</span> Your Learning Journey with <br /> the <span className="text-black">AI-Enhanced <span title="Knowledge Enhancement Module" className="cursor-pointer">KAM</span></span>
       </h1>

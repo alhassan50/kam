@@ -3,7 +3,7 @@ import Arrow from "../shared/Arrow"
 import { features } from "@/app/data/features"
 
 const AboutKam = () => (
-    <section className='py-10 grid gap-3'>
+    <section className='grid gap-3'>
       <div className="">
         <h1 className="lg:w-[90%] mx-auto text-left">
           What is the <span className="text-black">Knowledge Assessment Module?</span>

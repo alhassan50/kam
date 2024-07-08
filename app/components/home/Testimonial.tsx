@@ -1,7 +1,7 @@
 import { testimonials } from "@/app/data/testimonials"
 
 const Testimonial = () => (
-    <section className='text-center py-10 md:w-[90%] mx-auto grid gap-3'>
+    <section className='text-center md:w-[90%] mx-auto grid gap-3'>
       <h1 className="mx- text-left sm:text-center">
         <span className="text-black">KAM</span> Impacting Lives
       </h1>
