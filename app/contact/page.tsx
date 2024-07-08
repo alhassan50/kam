@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 function Contact() {
   return (
     <main>
-      <div className='grid gap-5 md:gap-10 lg:grid-cols-[1.2fr,.8fr]'>
-        <section className="order-last lg:order-first">
+      <section className='grid gap-5 md:gap-10 lg:grid-cols-[1.2fr,.8fr]'>
+        <div className="order-last lg:order-first">
           <article>
             <h1>Contact Us</h1>
             <p className='mt-5'>
@@ -58,10 +58,10 @@ function Contact() {
               ))}
             </ul>
           </article>         
-        </section>
+        </div>
 
         <ContactForm />
-      </div>
+      </section>
     </main>
   )
 }
