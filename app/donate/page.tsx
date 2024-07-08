@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 function Donate() {
   return (
     <main>
-      <h1>Support Our Mission</h1>
-      <div className='grid gap-5 md:gap-10 lg:grid-cols-2 mt-10'>
-        <section className="">
-          <article>
+      <section className='grid gap-5 md:gap-10 lg:grid-cols-2'>
+        <div>
+          <h1>Support Our Mission</h1>
+          <article className="mt-5">
             <p className=''>
               Your generosity helps us continue our mission to provide quality education and resources through the Knowledge Assessment Module (KAM). Your donation will directly contribute to the development of new features, maintenance of our platform, and support for students and educators around the world. Every contribution, no matter the size, makes a significant impact.
             </p>
@@ -21,11 +21,11 @@ function Donate() {
             </p>
           </article>
           
-          <MoMoPaymentMethods />         
-        </section>
+          <MoMoPaymentMethods /> 
+        </div>
         
         <DonateForm />
-      </div>
+      </section>
     </main>
   )
 }

@@ -25,7 +25,7 @@ type ContactInfo = {
     description: string;
 }
 
-type Feature = {
+type FeaturePlan = {
     feature: {
         name: string;
     };
@@ -34,8 +34,19 @@ type Feature = {
 
 type Plan =  {
     name: string;
-    features: Feature[]
+    features: FeaturePlan[]
     recommended: boolean;
     price: number;
     duration: string;
+}
+
+type FAQ = {
+    question: string;
+    answer: string;
+}
+
+type Feature = {
+    title: string;
+    description: string;
+    link: null | string;
 }
