@@ -82,4 +82,12 @@ main {
   .width-transition {
     transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Example transition duration and timing function */
   }
+
+  .arrowColor {
+    @apply stroke-black
+  }
+
+  [data-theme='dark'] .arrowColor {
+    @apply stroke-white
+  }
 }
