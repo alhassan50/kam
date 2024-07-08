@@ -48,6 +48,10 @@ main {
 }
 
 @layer utilities { 
+  section {
+    @apply py-10
+  }
+
   h1 {
     @apply text-[24px] md:text-[36px]
   }
