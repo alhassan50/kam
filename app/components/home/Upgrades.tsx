@@ -10,17 +10,20 @@ const Upgrades = () => (
         {upgrades.map(upgrade => (
           <li key={upgrade.title}>
             <div>
-              <figure className="h-10 w-10 bg-black rounded">
+              <figure className="h-60 w-full bg-black rounded">
 
               </figure>
 
-              <h3 className="mt-2">
-                {upgrade.title}
-              </h3>
+              <div>
+                <h3 className="mt-2">
+                  {upgrade.title}
+                </h3>
 
-              <p className="mt-2 text-sm">
-                {upgrade.description}
-              </p>
+                <p className="mt-2 text-sm">
+                  {upgrade.description}
+                </p>
+              </div>
+
             </div>
           </li>
         ))}
