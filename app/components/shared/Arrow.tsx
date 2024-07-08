@@ -1,14 +1,15 @@
 import React from 'react'
 
-function Arrow({width}: {width: number}) {
+function Arrow({width, applyColortheme}: {width: number, applyColortheme: boolean}) {
   return (
     <svg 
         viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" 
         width={width}
+        className={`${applyColortheme ? 'arrowColor' : 'stroke-white'}`}
     >
         <defs>
         <style>
-            {`.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}`}
+            {`.cls-1{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}`}
         </style>
         </defs>
         <title>arrow-right</title>
