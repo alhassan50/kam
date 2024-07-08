@@ -29,10 +29,10 @@ const AboutKam = () => (
                 {feature.description}
               </p>
               {feature.link && 
-                <Link href={feature.link}>
+                <Link href={feature.link} className="hover:underline">
                   <h3 className="mt-5 flex gap-2 items-center">
                     Learn More
-                    <Arrow width={16} />
+                    <Arrow applyColortheme={true} width={16} />
                   </h3>
                 </Link>
               }
