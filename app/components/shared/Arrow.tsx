@@ -12,7 +12,6 @@ function Arrow({width, applyColortheme}: {width: number, applyColortheme: boolea
             {`.cls-1{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}`}
         </style>
         </defs>
-        <title>arrow-right</title>
         <g id="arrow-right">
         <line className="cls-1" x1="29.08" x2="3.08" y1="16" y2="16" />
         <line className="cls-1" x1="29.08" x2="25.08" y1="16" y2="21" />
