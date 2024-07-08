@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 function GoPremium() {
   const Hero = () => (
-    <section className='text-center pt-10'>
+    <section className='text-center'>
       <div>
         <h1 className=''>
           Unlock Exclusive Features with KAM Premium
@@ -37,7 +37,7 @@ function GoPremium() {
   )
 
   const Pricing = () => (
-    <section className='pt-20 text-center'>
+    <section className='text-center'>
       <div className=''>
         <h2 className='capitalize'>
           Upgrade your learning
