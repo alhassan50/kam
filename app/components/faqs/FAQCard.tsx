@@ -21,7 +21,7 @@ function FAQCard({index, faq}: {index: number, faq: FAQ}) {
         {openIndex === index && (
             <div>
             <hr className="border-[var(--bg-card)] my-5" />
-            <p className='font-extralight'>{faq.answer}</p>
+            <p className='text-sm'>{faq.answer}</p>
             </div>
         )}
     </div>
