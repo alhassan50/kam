@@ -1,7 +1,7 @@
 import { upgrades } from "@/app/data/upgrades"
 
 const Upgrades = () => (
-    <section className="py-10 md:w-[90%] mx-auto grid gap-3">
+    <section className="md:w-[90%] mx-auto grid gap-3">
       <h1 className="lg:text-center">
         What&apos;s Next for You? 
       </h1>
