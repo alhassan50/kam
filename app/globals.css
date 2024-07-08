@@ -48,16 +48,20 @@ main {
 }
 
 @layer utilities { 
+  section {
+    @apply py-10
+  }
+
   h1 {
     @apply text-[24px] md:text-[36px]
   }
   
   h2 {
-    @apply text-[22px] md:text-[28px]
+    @apply text-[20px] md:text-[26px]
   }
 
   p {
-    @apply font-extralight
+    @apply font-[300]
   }
 
   main {
@@ -81,5 +85,13 @@ main {
 
   .width-transition {
     transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Example transition duration and timing function */
+  }
+
+  .arrowColor {
+    @apply stroke-black
+  }
+
+  [data-theme='dark'] .arrowColor {
+    @apply stroke-white
   }
 }

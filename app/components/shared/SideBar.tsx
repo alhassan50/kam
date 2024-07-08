@@ -17,7 +17,7 @@ function SideBar() {
   };
 
   return (
-    <div className={`${isSideBarOpened ? 'w-[250px] border-r' : 'w-[0px] md:w-[85px] border-r-0 md:border-r'} fixed overflow-hidden h-[calc(100vh-53px)] bg-sideBarBg width-transition z-50`}>
+    <div className={`${isSideBarOpened ? 'w-[250px] border-r' : 'w-[0px] lg:w-[85px] border-r-0 lg:border-r'} fixed overflow-hidden h-[calc(100vh-53px)] bg-sideBarBg width-transition z-50`}>
       <div className={`w-[250px] h-full bg-sideBarBg pt-2`}>
         <ul className=''>
           {navLinks.map(link => (
@@ -30,7 +30,7 @@ function SideBar() {
       </div>
       <div
         onClick={() => dispatch(toggleSideBar())}
-        className={`fixed top-0 left-0 w-full h-full -z-10 bg-[rgba(0,0,0,0.6)] ${isSideBarOpened ? 'block' : 'hidden'} md:hidden`}
+        className={`fixed top-0 left-0 w-full h-full -z-10 bg-[rgba(0,0,0,0.6)] ${isSideBarOpened ? 'block' : 'hidden'} lg:hidden`}
       ></div>
     </div>
   );

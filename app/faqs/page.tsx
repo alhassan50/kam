@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 function Faqs() {
   return (
     <main>
-      <div>
+      <section>
         <h1>Frequently Asked Questions</h1>
         <p className='mt-2'>
           Find answers to the most common questions about the Knowledge Assessment Module (KAM). For further assistance, please contact our support team.
         </p>
-      </div>
-      <ul className="grid gap-3 mt-10">
+      </section>
+      <ul className="grid gap-3">
         {faqs.map((faq, index) => (
           <li
             key={faq.question}

@@ -239,7 +239,7 @@ function DonateForm() {
 
 
   return (
-    <section>
+    <div>
         <div className='p-5 md:p-10 rounded-[4px] group border-[var(--bg-card)] bg-[var(--hover-card)]'>
             <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
                 <FormHeader />
@@ -247,7 +247,7 @@ function DonateForm() {
                 {step === 2 && <PaymentMethod />}
             </form>
         </div>
-    </section>
+    </div>
   )
 }
 
