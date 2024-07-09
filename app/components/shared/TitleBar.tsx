@@ -9,7 +9,7 @@ function TitleBar() {
 
   return (
     <div className='hidden md:block'>
-        <h3 className='font-medium capitalize'>
+        <h3 className='font-medium capitalize text-sm'>
           {activeNavLink ? activeNavLink.title : 'Not Found'}
         </h3>
     </div>
