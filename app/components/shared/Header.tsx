@@ -13,7 +13,7 @@ function Header() {
             <div className='flex items-center gap-3'>
                 <button 
                     type='button'
-                    className='bg-primary text-secondary px-4 py-1 rounded-[4px] hidden md:block'
+                    className='bg-primary text-sm text-secondary px-4 py-2 font-medium rounded-[4px] hidden md:block'
                 >
                     Go Premium
                 </button>
