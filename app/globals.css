@@ -12,6 +12,7 @@
   --active-nav-link-bg: #424242;
   
   --prem-card-bg: rgba(0,0,0,0.95);
+  --modal-bg: rgba(0,0,0,.7);
   
   --active-text: var(--secondary-color);
 
@@ -27,6 +28,7 @@
   --hover-primary-color: #212121;
   
   --prem-card-bg: rgba(0,0,0,0.55);
+  --modal-bg: rgba(0,0,0,.1);
 
   --active-text: var(--primary-color);
 
