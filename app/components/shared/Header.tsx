@@ -2,6 +2,7 @@ import React from 'react'
 import TitleBar from './TitleBar'
 import Logo from './Logo'
 import Profile from './Profile'
+import ProfileContainer from './ProfileContainer'
 
 function Header() {
   return (
@@ -25,7 +26,7 @@ function Header() {
                     Sign In
                 </button> */}
                 
-                <Profile />
+                <ProfileContainer />
             </div>
         </div>
     </header>
