@@ -41,11 +41,11 @@ body {
   color: var(--primary-color);
 }
 
-main {
+main, .profile-menu {
   background-color: #fff
 }
 
-[data-theme='dark'] main {
+[data-theme='dark'] main, [data-theme='dark'] .profile-menu {
   background-color: #212121
 }
 
@@ -84,7 +84,7 @@ body {
   }
 
   main {
-    @apply p-4 w-full flex-1
+    @apply p-4 w-full flex-1 overflow-y-auto
   }
 
   input {
