@@ -40,7 +40,7 @@ function ChatNav() {
         <div
             ref={chatNavRef}
             title={!isChatListOpened ? "Open chat list" : "Close chat list"}
-            className="relative cursor-pointer"
+            className="relative cursor-pointer z-[1000]"
         >
             <button 
                 type="button"
