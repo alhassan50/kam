@@ -2,7 +2,7 @@ import Link from "next/link"
 
 function AddNewChatButton() {
   return (
-    <Link href={'/my-personal-tutor?isNewChat=y'} passHref>
+    <Link href={'?isNewChat=y'} passHref>
         <button
             type="button"
             title="Add slides" 
