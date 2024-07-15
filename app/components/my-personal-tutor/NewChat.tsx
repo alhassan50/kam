@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from "react"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import SlidesDropzone from "./SlidesDropzone"
 import CloseModal from "./CloseModal"
 import SlidesDescription from "./SlidesDescription"
@@ -10,19 +10,22 @@ function NewChat() {
     const searchParams = useSearchParams()
     const showDialogue = searchParams.get('isNewChat')
 
+    const router = useRouter()
+
     const dialogueRef = useRef<null | HTMLDialogElement>(null)
 
     useEffect(()=>{
         if (showDialogue && showDialogue === 'y') dialogueRef.current?.showModal()
         else dialogueRef.current?.close()
     }, [showDialogue])
-
-    const openDialgue = () => {
-        dialogueRef.current?.showModal()
-    }
     
     const closeDialgue = () => {
         dialogueRef.current?.close()
+        // Remove 'isNewChat' from the URL without navigating away
+        const currentParams = new URLSearchParams(window.location.search)
+        currentParams.delete('isNewChat')
+        const newUrl = `${window.location.pathname}?${currentParams.toString()}`
+        router.replace(newUrl)
     }
 
     return (
