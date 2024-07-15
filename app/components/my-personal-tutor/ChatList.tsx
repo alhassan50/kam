@@ -1,20 +1,39 @@
-import React from 'react'
+import { chatList } from "@/app/data/chatList";
+import Link from "next/link"
+
+type ChatItem = {
+    id: string;
+    title: string;
+    dateModified: string;
+};
 
 function ChatList() {
-  return (
-    <button 
-        type="button"
-        title="Select slides" 
-        className="blur-bg flex items-center gap-1 h-full p-2 hover:bg-[var(--hover-card)] rounded backdrop-blur border border-[var(--bg-card)]"
-    >
-        <h3 className="text-sm max-w-[120px] whitespace-nowrap overflow-hidden overflow-ellipsis">
-            Information Systems
-        </h3>
-        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 24 24">
-            <path fill-rule="evenodd" d="M11.341 4.747a1 1 0 0 1 1.318 0l4 3.5a1 1 0 1 1-1.317 1.506L12 6.829 8.659 9.753a1 1 0 0 1-1.317-1.506l4-3.5Zm-4.095 9.61a1 1 0 0 1 1.41-.096L12 17.174l3.343-2.913a1 1 0 1 1 1.314 1.508l-4 3.485a1 1 0 0 1-1.314 0l-4-3.485a1 1 0 0 1-.097-1.411Z" clip-rule="evenodd"></path>
-        </svg>
-    </button>
-  )
-}
+    function orderByLatestDateModified(chatList: ChatItem[]): ChatItem[] {
+        return chatList.sort((a, b) => {
+          return new Date(b.dateModified).getTime() - new Date(a.dateModified).getTime();
+        });
+    }
+
+    const sortedChatList = orderByLatestDateModified(chatList);
+
+
+    return (
+      <div className="absolute max-w-[200px] left-0 top-[120%] p-2 blur-bg backdrop-blur border border-[var(--bg-card)] rounded">
+        {sortedChatList.map((chat) => (
+          <Link key={chat.id} href={`/my-personal-tutor/${chat.title}`}>
+            <button 
+              type="button"
+              title={`Select ${chat.title}`} 
+              className="flex items-center max-w-full min-w-full gap-1 h-full p-2 hover:bg-[var(--hover-card)] rounded"
+            >
+              <h3 className="text-[12px] max-w-[200px] whitespace-nowrap overflow-hidden overflow-ellipsis">
+                {chat.title}
+              </h3>
+            </button>
+          </Link>
+        ))}
+      </div>
+    );
+  }
 
 export default ChatList
