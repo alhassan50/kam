@@ -30,7 +30,6 @@ export default function Layout({
               router.push(`/mypersonaltutor/${mostRecentChat.id}`);
             }
           } catch (error) {
-            console.log(123);
             router.push('?isNewChat=y');
           } finally {
             setLoading(false); // Set loading to false after fetch completes
