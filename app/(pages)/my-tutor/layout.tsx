@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Spinner from "../components/shared/Spinner";
-import NewChat from "../components/my-tutor/NewChat";
-import ChatNav from "../components/my-tutor/ChatNav";
-import AddNewChatButton from "../components/my-tutor/AddNewChatButton";
-import TextArea from "../components/my-tutor/TextArea";
+import Spinner from "@/app/components/shared/Spinner";
+import NewChat from "@/app/components/my-tutor/NewChat";
+import ChatNav from "@/app/components/my-tutor/ChatNav";
+import AddNewChatButton from "@/app/components/my-tutor/AddNewChatButton";
+import TextArea from "@/app/components/my-tutor/TextArea";
 
 export default function Layout({
     children,

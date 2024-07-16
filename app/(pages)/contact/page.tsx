@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Metadata } from 'next';
-import { contactInfo } from '../data/contactInfo';
-import ContactForm from '../components/contact/ContactForm'
+import { contactInfo } from '../../data/contactInfo';
+import ContactForm from '../../components/contact/ContactForm'
 
 export const metadata: Metadata = {
   title: 'Contact',

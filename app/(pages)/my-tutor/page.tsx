@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import DefaultChatInterface from "../components/my-tutor/DefaultChatInterface"
+import DefaultChatInterface from "@/app/components/my-tutor/DefaultChatInterface";
 
 export const metadata: Metadata = {
   title: 'Tutor',

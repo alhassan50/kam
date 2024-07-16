@@ -1,5 +1,5 @@
-import { faqs } from '../data/faqs';
-import FAQCard from '../components/faqs/FAQCard';
+import { faqs } from '../../data/faqs';
+import FAQCard from '../../components/faqs/FAQCard';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
