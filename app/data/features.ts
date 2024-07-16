@@ -7,7 +7,7 @@ export const features: Feature[] = [
     {
         title: "AI-Powered Personal Tutor",
         description: "Interact with an AI-driven tutor that provides personalized explanations, breakdowns, and summaries of your study materials based on advanced learning algorithms.",
-        link: "/my-personal-tutor",
+        link: "/my-tutor",
     },
     {
         title: "Customizable Practice Tests",

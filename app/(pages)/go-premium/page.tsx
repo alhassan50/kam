@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
-import Hero from '../components/go-premium/Hero'
-import Pricing from '../components/go-premium/Pricing';
+import Hero from '../../components/go-premium/Hero'
+import Pricing from '../../components/go-premium/Pricing';
 
 export const metadata: Metadata = {
   title: 'Go Premium',
