@@ -41,12 +41,12 @@ function ChatNav() {
             ref={chatNavRef}
             title={!isChatListOpened ? "Open chat list" : "Close chat list"}
             className="relative cursor-pointer z-[1000]"
+            onClick={toggleChatList}
         >
             <button 
                 type="button"
                 title="Select slides" 
                 className="blur-bg flex items-center gap-1 h-full p-2 hover:bg-[var(--hover-card)] rounded backdrop-blur border border-[var(--bg-card)]"
-                onClick={toggleChatList}
             >
                 <h3 className="text-sm max-w-[120px] whitespace-nowrap overflow-hidden overflow-ellipsis">
                     Information Systems
