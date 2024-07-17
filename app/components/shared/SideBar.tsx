@@ -11,7 +11,7 @@ function SideBar() {
   const dispatch = useDispatch();
 
   const handleLinkClick = () => {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 1024) {
       dispatch(toggleSideBar());
     }
   };
