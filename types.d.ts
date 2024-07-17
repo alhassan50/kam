@@ -52,8 +52,8 @@ type Feature = {
 }
 
 type LogInFormData = {
-    emailAddress: string,
-    password: string
+    logInEmailAddress: string,
+    logInPassword: string
 }
 
 type SignUpFormData = {
