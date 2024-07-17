@@ -5,8 +5,8 @@ export const navLinks = [
         icon: `/assets/images/home-icon.svg`
     },
     { 
-        title: "My Personal Tutor", 
-        href: "/my-personal-tutor", 
+        title: "My Tutor", 
+        href: "/my-tutor", 
         icon: `/assets/images/tutor-icon.svg`
     },
     { 

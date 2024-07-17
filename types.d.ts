@@ -50,3 +50,15 @@ type Feature = {
     description: string;
     link: null | string;
 }
+
+type LogInFormData = {
+    logInEmailAddress: string,
+    logInPassword: string
+}
+
+type SignUpFormData = {
+    fullName: '',
+    emailAddress: '',
+    password: '',
+    acceptTerms: boolean | string
+}

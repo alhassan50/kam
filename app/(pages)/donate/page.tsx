@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import MoMoPaymentMethods from "../components/donate/MoMoPaymentMethods";
-import DonateForm from "../components/donate/DonateForm";
+import MoMoPaymentMethods from "../../components/donate/MoMoPaymentMethods";
+import DonateForm from "../../components/donate/DonateForm";
 
 export const metadata: Metadata = {
   title: 'Donate',

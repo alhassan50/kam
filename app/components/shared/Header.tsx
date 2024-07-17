@@ -2,6 +2,9 @@ import React from 'react'
 import TitleBar from './TitleBar'
 import Logo from './Logo'
 import Profile from './Profile'
+import ProfileContainer from './ProfileContainer'
+import Link from 'next/link'
+import Auth from './Auth'
 
 function Header() {
   return (
@@ -13,19 +16,12 @@ function Header() {
             <div className='flex items-center gap-3'>
                 <button 
                     type='button'
-                    className='bg-primary text-secondary px-4 py-1 rounded-[4px] hidden md:block'
+                    className='bg-primary text-sm text-secondary px-4 py-2 font-medium rounded-[4px] hidden md:block'
                 >
                     Go Premium
                 </button>
 
-                {/* <button
-                    type='button'
-                    className='hover:underline '
-                >
-                    Sign In
-                </button> */}
-                
-                <Profile />
+                <Auth />
             </div>
         </div>
     </header>

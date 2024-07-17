@@ -12,6 +12,7 @@
   --active-nav-link-bg: #424242;
   
   --prem-card-bg: rgba(0,0,0,0.95);
+  --modal-bg: rgba(0,0,0,.7);
   
   --active-text: var(--secondary-color);
 
@@ -27,6 +28,7 @@
   --hover-primary-color: #212121;
   
   --prem-card-bg: rgba(0,0,0,0.55);
+  --modal-bg: rgba(255,255,255,.1);
 
   --active-text: var(--primary-color);
 
@@ -39,12 +41,29 @@ body {
   color: var(--primary-color);
 }
 
-main {
+main, .profile-menu {
   background-color: #fff
 }
 
-[data-theme='dark'] main {
+[data-theme='dark'] main, [data-theme='dark'] .profile-menu {
   background-color: #212121
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column
+}
+
+.blur-bg {
+  -webkit-backdrop-filter: blur(8px)
+}
+
+.blur-bg-4 {
+  -webkit-backdrop-filter: blur(4px)
 }
 
 @layer utilities { 
@@ -65,7 +84,7 @@ main {
   }
 
   main {
-    @apply p-4 flex-1
+    @apply p-4 w-full flex-1 overflow-y-auto
   }
 
   input {
@@ -74,6 +93,10 @@ main {
 
   .btn-primary {
     @apply bg-black py-4 rounded-[4px] text-[#fff]
+  }
+  
+  .btn-ghost {
+    @apply bg-transparent py-4 rounded-[4px] text-[#000]
   }
 
   .active-link {
