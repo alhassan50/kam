@@ -10,6 +10,8 @@ function NewChat() {
     const searchParams = useSearchParams()
     const showDialogue = searchParams.get('isNewChat')
 
+    console.log(showDialogue)
+
     const router = useRouter()
 
     const dialogueRef = useRef<null | HTMLDialogElement>(null)

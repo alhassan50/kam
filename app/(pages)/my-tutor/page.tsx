@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 async function MyTutor() {
-  await new Promise((resolve) => setTimeout(resolve, 5000))
+  //await new Promise((resolve) => setTimeout(resolve, 5000))
 
   return (
     <>

@@ -28,7 +28,7 @@
   --hover-primary-color: #212121;
   
   --prem-card-bg: rgba(0,0,0,0.55);
-  --modal-bg: rgba(0,0,0,.1);
+  --modal-bg: rgba(255,255,255,.1);
 
   --active-text: var(--primary-color);
 

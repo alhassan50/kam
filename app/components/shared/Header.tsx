@@ -3,6 +3,8 @@ import TitleBar from './TitleBar'
 import Logo from './Logo'
 import Profile from './Profile'
 import ProfileContainer from './ProfileContainer'
+import Link from 'next/link'
+import Auth from './Auth'
 
 function Header() {
   return (
@@ -19,14 +21,7 @@ function Header() {
                     Go Premium
                 </button>
 
-                {/* <button
-                    type='button'
-                    className='hover:underline '
-                >
-                    Sign In
-                </button> */}
-                
-                <ProfileContainer />
+                <Auth />
             </div>
         </div>
     </header>

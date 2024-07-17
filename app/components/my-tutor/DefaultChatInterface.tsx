@@ -1,7 +1,7 @@
 import React from 'react'
 
 async function DefaultChatInterface() {
-  await new Promise((resolve) => setTimeout(resolve, 5000))
+  //await new Promise((resolve) => setTimeout(resolve, 5000))
 
   return (
     <div>
