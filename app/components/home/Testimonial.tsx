@@ -3,7 +3,7 @@ import { testimonials } from "@/app/data/testimonials"
 const Testimonial = () => (
     <section className='text-center md:w-[90%] mx-auto grid gap-3'>
       <h1 className="mx- text-left sm:text-center">
-        <span className="text-black">KAM</span> Impacting Lives
+        <span className="text-">KAM</span> Impacting Lives
       </h1>
 
       <ul className="grid gap-5 sm:grid-cols-2 mt-8">
