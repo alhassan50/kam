@@ -29,8 +29,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <ReduxProvider>
-          <LogIn />
-          <SignUp />
+         {/*  <LogIn />
+          <SignUp /> */}
           <Header />
           <div className="flex flex-col md:flex-row overflow-x-hidden h-full overflow-y-hidden">
             <SideBar />
