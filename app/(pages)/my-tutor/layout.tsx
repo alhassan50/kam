@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Spinner from "@/app/components/shared/Spinner";
 import NewChat from "@/app/components/my-tutor/NewChat";
@@ -43,7 +43,9 @@ export default function Layout({
 
     return (
         <>
-            <NewChat />
+            <Suspense fallback={<div>Loading...</div>}>
+              <NewChat />
+            </Suspense>
             <main className="h-full w-full px-0 pt-0">
                 <div className="h-full flex flex-col">
                 <div className="flex-1 h-full overflow-auto p-4">
