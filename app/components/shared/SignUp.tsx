@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import CloseModal from "../my-tutor/CloseModal"
 import { useForm, SubmitHandler } from "react-hook-form";
