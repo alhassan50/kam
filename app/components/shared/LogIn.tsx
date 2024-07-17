@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import CloseModal from "../my-tutor/CloseModal"
 import { useForm, SubmitHandler } from "react-hook-form";
 import Arrow from "../shared/Arrow";
+import Link from "next/link";
 
 function LogIn() {
     const searchParams = useSearchParams()
@@ -130,6 +131,8 @@ function LogIn() {
                                         <Arrow width={24} />
                                     </button>
                                 </div>
+
+                                <p className="text-[12px] text-primary text-center">Don&apos;t have an account? <Link href={'?signup=y'} className="underline">Sign up</Link></p>
                             </form>
                         </div>
                     </div>
