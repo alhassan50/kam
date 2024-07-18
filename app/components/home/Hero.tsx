@@ -7,7 +7,7 @@ const Hero = () => (
       </h1>
 
       <p className='mt-2'>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo aliquid illo labore libero dolorem, modi <br /> accusantium quos impedit asperiores ullam.
+        Great learning comes with great tools. KAM is the best tool for us. Yep! Its that simple! 😃
       </p>
 
       <button
