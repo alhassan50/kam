@@ -17,6 +17,7 @@ function LogIn() {
         formState: { errors },
         setValue,
         clearErrors,
+        reset
     } = useForm<LogInFormData>({
         defaultValues: {
             logInEmailAddress: '',
@@ -49,6 +50,7 @@ function LogIn() {
         currentParams.delete('login')
         const newUrl = `${window.location.pathname}?${currentParams.toString()}`
         router.replace(newUrl)
+        reset()
     }
 
     const togglePasswordVisibility = () => {
