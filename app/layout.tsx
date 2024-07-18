@@ -29,18 +29,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <ReduxProvider>
-          <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ReduxProvider>
             <LogIn />
             <SignUp />
-          </Suspense>
-          <Header />
-          <div className="flex flex-col md:flex-row overflow-x-hidden h-full overflow-y-hidden">
-            <SideBar />
-            <EmptySideBar />
-            {children}
-          </div>
-        </ReduxProvider>
+            <Header />
+            <div className="flex flex-col md:flex-row overflow-x-hidden h-full overflow-y-hidden">
+              <SideBar />
+              <EmptySideBar />
+              {children}
+            </div>
+          </ReduxProvider>
+        </Suspense>
       </body>
     </html>
   );
