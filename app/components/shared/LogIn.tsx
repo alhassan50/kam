@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import CloseModal from "../my-tutor/CloseModal"
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -17,10 +17,11 @@ function LogIn() {
         formState: { errors },
         setValue,
         clearErrors,
+        reset
     } = useForm<LogInFormData>({
         defaultValues: {
-            emailAddress: '',
-            password: ''
+            logInEmailAddress: '',
+            logInPassword: ''
         }
     });
 
@@ -49,6 +50,7 @@ function LogIn() {
         currentParams.delete('login')
         const newUrl = `${window.location.pathname}?${currentParams.toString()}`
         router.replace(newUrl)
+        reset()
     }
 
     const togglePasswordVisibility = () => {
@@ -73,28 +75,28 @@ function LogIn() {
                             <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="grid gap-5">
                                     <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
-                                        <label htmlFor="emailAddress" className="text-primary">
+                                        <label htmlFor="logInEmailAddress" className="text-primary">
                                             Email Address
                                         </label>
                                         <input 
                                             type="email"
                                             placeholder="abc@gmail.com"
                                             className={`px-5 py-2 border-[var(--bg-card)] border min-w-0 rounded-[4px]`}
-                                            {...register("emailAddress", {
+                                            {...register("logInEmailAddress", {
                                                 required: "Your email address is required",
                                                 pattern: {
                                                 value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
                                                 message: "Please enter a valid email address"
                                                 }
                                             })}
-                                            id="emailAddress"
-                                            onChange={(e) => clearFieldError("emailAddress", e.target.value)}
+                                            id="logInEmailAddress"
+                                            onChange={(e) => clearFieldError("logInEmailAddress", e.target.value)}
                                         />
-                                        <p className="text-[12px] text-red-600">{errors?.emailAddress?.message}</p>
+                                        <p className="text-[12px] text-red-600">{errors?.logInEmailAddress?.message}</p>
                                     </div>
                                     
                                     <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
-                                        <label htmlFor="password" className="text-primary">
+                                        <label htmlFor="logInPassword" className="text-primary">
                                             Password
                                         </label>
                                         <div className="relative">
@@ -102,15 +104,15 @@ function LogIn() {
                                                 type={passwordVisible ? "text" : "password"}
                                                 placeholder="At least 8 characters"
                                                 className={`px-5 py-2 border-[var(--bg-card)] border min-w-0 rounded-[4px] w-full`}
-                                                {...register("password", {
+                                                {...register("logInPassword", {
                                                     required: "Your password is required",
                                                     pattern: {
                                                     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
                                                     message: "Your password must contain at least 8 characters including numbers and letters or special characters"
                                                     }
                                                 })}
-                                                id="password"
-                                                onChange={(e) => clearFieldError("password", e.target.value)}
+                                                id="logInPassword"
+                                                onChange={(e) => clearFieldError("logInPassword", e.target.value)}
                                             />
                                             <button
                                                 type="button"
@@ -120,7 +122,7 @@ function LogIn() {
                                                 {passwordVisible ? "Hide" : "Show"}
                                             </button>
                                         </div>
-                                        <p className="text-[12px] text-red-600">{errors?.password?.message}</p>
+                                        <p className="text-[12px] text-red-600">{errors?.logInPassword?.message}</p>
                                     </div>
 
                                     <button

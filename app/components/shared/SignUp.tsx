@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import CloseModal from "../my-tutor/CloseModal"
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -17,6 +17,7 @@ function SignUp() {
         formState: { errors },
         setValue,
         clearErrors,
+        reset,
     } = useForm<SignUpFormData>({
         defaultValues: {
             fullName: '',
@@ -57,6 +58,7 @@ function SignUp() {
         currentParams.delete('signup')
         const newUrl = `${window.location.pathname}?${currentParams.toString()}`
         router.replace(newUrl)
+        reset()
     }
 
     const togglePasswordVisibility = () => {
@@ -174,7 +176,7 @@ function SignUp() {
                                     </button>
                                 </div>
 
-                                <p className="text-[12px] text-primary text-center">Already have an account? <Link href={'?signup=y'} className="underline">Log in</Link></p>
+                                <p className="text-[12px] text-primary text-center">Already have an account? <Link href={'?login=y'} className="underline">Log in</Link></p>
                             </form>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Spinner from "@/app/components/shared/Spinner";
 import NewChat from "@/app/components/my-tutor/NewChat";
@@ -42,26 +42,26 @@ export default function Layout({
       if (loading) return <Spinner />
 
     return (
-        <>
-            <NewChat />
-            <main className="h-full w-full px-0 pt-0">
-                <div className="h-full flex flex-col">
-                <div className="flex-1 h-full overflow-auto p-4">
-                    <div className="mb-4 sticky top-0 inline-block">
-                    <div className="flex gap-2">
-                        <ChatNav />
-                        <AddNewChatButton />
-                    </div>
-                    </div>
-                    <div className="sm:w-[90%] h-full md:w-[70%] mx-auto text-sm">
-                        {children}
-                    </div>
-                </div>
-                <div className="w-full p-3 pb-0  bo">
-                    <TextArea />
-                </div>
-                </div>
-            </main>
-        </>
+        <Suspense fallback={<Spinner />}>
+          <NewChat />
+          <main className="h-full w-full px-0 pt-0">
+              <div className="h-full flex flex-col">
+              <div className="flex-1 h-full overflow-auto p-4">
+                  <div className="mb-4 sticky top-0 inline-block">
+                  <div className="flex gap-2">
+                      <ChatNav />
+                      <AddNewChatButton />
+                  </div>
+                  </div>
+                  <div className="sm:w-[90%] h-full md:w-[70%] mx-auto text-sm">
+                      {children}
+                  </div>
+              </div>
+              <div className="w-full p-3 pb-0  bo">
+                  <TextArea />
+              </div>
+              </div>
+          </main>
+        </Suspense>
     );
   }
