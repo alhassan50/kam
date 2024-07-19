@@ -11,6 +11,8 @@
   --hover-primary-color: #eee;
   --active-nav-link-bg: #424242;
   
+  --btn-primary-hover: hsl(0,0%,11%);
+
   --prem-card-bg: rgba(0,0,0,0.95);
   --modal-bg: rgba(0,0,0,.7);
   
@@ -29,6 +31,8 @@
   
   --prem-card-bg: rgba(0,0,0,0.55);
   --modal-bg: rgba(255,255,255,.1);
+
+  --btn-primary-hover: hsl(0,0%,4%);
 
   --active-text: var(--primary-color);
 
@@ -92,7 +96,7 @@ body {
   }
 
   .btn-primary {
-    @apply bg-black py-4 rounded-[4px] text-[#fff]
+    @apply bg-black py-4 rounded-[4px] text-[#fff] hover:bg-[var(--btn-primary-hover)] transition-all duration-150
   }
   
   .btn-ghost {

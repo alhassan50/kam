@@ -39,7 +39,7 @@ function ContactForm() {
 
     return (
         <div className="order-first lg:order-last">
-            <div className='max-w-[500px] mx-auto p-5 md:p-10 rounded-[4px] group border-[var(--bg-card)] bg-[var(--hover-card)]'>
+            <div className='max-w-[500px] mx-auto p-5 md:p-10 rounded-[4px] border-[var(--bg-card)] bg-[var(--hover-card)]'>
                 <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
                     <FormHeader />
 
@@ -100,10 +100,13 @@ function ContactForm() {
 
                     <button
                         type="submit"
-                        className="btn-primary flex justify-center items-center gap-2 mt-3"
+                        className="btn-primary group flex justify-center items-center gap-2 mt-3"
                     >
                         Send Message
-                        <Arrow width={32} />
+
+                        <div className="gro group-hover:translate-x-1 transition-all duration-150">
+                            <Arrow width={32} />
+                        </div>
                     </button>
                 </form>
             </div>

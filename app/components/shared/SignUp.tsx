@@ -169,10 +169,12 @@ function SignUp() {
 
                                     <button
                                         type="submit"
-                                        className="btn-primary flex justify-center items-center gap-2 mt-1"
+                                        className="btn-primary group flex justify-center items-center gap-2 mt-1"
                                     >
                                         Sign Up
-                                        <Arrow width={24} />
+                                        <div className="gro group-hover:translate-x-1 transition-all duration-150">
+                                            <Arrow width={24} />
+                                        </div>
                                     </button>
                                 </div>
 
