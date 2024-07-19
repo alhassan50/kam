@@ -8,6 +8,7 @@ import EmptySideBar from "./components/shared/EmptySideBar";
 import LogIn from "./components/shared/LogIn";
 import SignUp from "./components/shared/SignUp";
 import { Suspense } from "react";
+import Spinner from "./components/shared/Spinner";
 
 const poppins = Poppins({ 
   subsets: ["latin"],
@@ -29,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className="h-full w-full"><Spinner /></div>}>
           <ReduxProvider>
             <LogIn />
             <SignUp />
