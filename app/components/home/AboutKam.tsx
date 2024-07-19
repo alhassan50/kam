@@ -6,16 +6,17 @@ const AboutKam = () => (
     <section className='grid gap-3'>
       <div className="">
         <h1 className="lg:w-[90%] mx-auto text-left">
-          What is the <span className="text-">Knowledge Assessment Module?</span>
+          What is KAM - the <span className="text-">Knowledge Assessment Module?</span>
         </h1>
       </div>
 
       <p className='mt-8 text-left lg:w-[90%] mx-auto'>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat recusandae architecto nulla placeat. Eligendi natus laboriosam dolor illo. Aliquam nisi aperiam repellendus quod, est obcaecati dolor saepe reiciendis natus pariatur!
+      Sometimes it&apos;s hard to ask yourself the right questions. No study buddy! What do you do?
+      Give up? Of course not, kam is always there for you. We generate the right questions for you. I mean just for you. We help you enjoy what you learn.
       </p>
      
       <p className='mt-2 text-left lg:w-[90%] mx-auto'>
-        Accusantium aspernatur pariatur enim distinctio inventore itaque? Aliquid corporis odit quasi ratione nobis praesentium rerum adipisci consectetur asperiores nostrum? Esse laboriosam officia consectetur error excepturi laudantium deleniti, magni labore nostrum!
+        Kam is your go-to resource. We specialize in sparking curiosity and igniting that &apos;aha!&apos; moment. With Kam by your side, learning becomes not just a task, but a journey of discovery. Let us guide you through the twists and turns of knowledge, making every step enjoyable and every challenge conquerable.
       </p>
 
       <ul className="grid gap-20 mt-10 lg:w-[90%] mx-auto">
@@ -29,10 +30,13 @@ const AboutKam = () => (
                 {feature.description}
               </p>
               {feature.link && 
-                <Link href={feature.link} className="hover:underline">
+                <Link href={feature.link} className="group hover:underline inline-block">
                   <h3 className="mt-5 flex gap-2 items-center">
                     Learn More
-                    <Arrow applyColortheme={true} width={16} />
+
+                    <div className="gro group-hover:translate-x-1 transition-all duration-150">
+                      <Arrow applyColortheme={true} width={22} />
+                    </div>
                   </h3>
                 </Link>
               }
