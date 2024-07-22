@@ -5,10 +5,11 @@ import Profile from './Profile'
 import ProfileContainer from './ProfileContainer'
 import Link from 'next/link'
 import Auth from './Auth'
+import AuthWrapper from './AuthWrapper'
 
 function Header() {
   return (
-    <header className='border-tertiary border-b sticky top-0 z-[1000] bg-sideBarBg'>
+    <header className='border-[var(--border-color)] border-b sticky top-0 z-[1000] bg-sideBarBg'>
         <div className='flex justify-between items-center px-4 py-2'>
             <Logo />
             <TitleBar />
@@ -21,7 +22,7 @@ function Header() {
                     Go Premium
                 </Link>
 
-                <Auth />
+                <AuthWrapper />
             </div>
         </div>
     </header>
