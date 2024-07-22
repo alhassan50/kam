@@ -19,7 +19,7 @@ function NewChat() {
         else dialogueRef.current?.close()
     }, [showDialogue])
     
-    const closeDialgue = () => {
+    const closeDialogue = () => {
         dialogueRef.current?.close()
         // Remove 'isNewChat' from the URL without navigating away
         const currentParams = new URLSearchParams(window.location.search)
@@ -39,7 +39,7 @@ function NewChat() {
                                     New Chat
                                 </h3>
 
-                                <CloseModal closeDialgue={closeDialgue} />
+                                <CloseModal closeDialogue={closeDialogue} />
                             </div>
                             <p className="text-[12px] mt-2 text-primary">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro dicta repudiandae officiis sapiente hic minus voluptatem quia minima distinctio.
