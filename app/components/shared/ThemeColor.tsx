@@ -47,7 +47,7 @@ function ThemeColor() {
 
 
   return (
-    <div className={`capitalize ${isSideBarOpened ? 'px-6' : 'px-4'} py-3 min-w-full border-t flex gap-3`}>
+    <div className={`capitalize ${isSideBarOpened ? 'px-6' : 'px-4'} py-3 min-w-full border-t border-t-[var(--border-color)] flex gap-3`}>
         {
             isSideBarOpened &&
             <figure>
