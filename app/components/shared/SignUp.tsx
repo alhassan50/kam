@@ -1,23 +1,37 @@
 'use client'
 
-import { useEffect, useRef, useState, Suspense } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import CloseModal from "../my-tutor/CloseModal"
+import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import CloseModal from "../my-tutor/CloseModal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Arrow from "../shared/Arrow";
 import Link from "next/link";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "@/app/firebase/firebaseClient";
+import { Alert, CircularProgress } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { toggleAuthState } from "@/app/redux/slices/authSlice";
+
+type SignUpFormData = {
+    fullName: string;
+    emailAddress: string;
+    password: string;
+    acceptTerms: boolean;
+};
 
 function SignUp() {
-    const searchParams = useSearchParams()
-    const showDialogue = searchParams.get('signup')
+    const searchParams = useSearchParams();
+    const showDialogue = searchParams.get('signup');
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const dispatch = useDispatch();
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
         setValue,
         clearErrors,
-        reset,
+        reset
     } = useForm<SignUpFormData>({
         defaultValues: {
             fullName: '',
@@ -27,43 +41,63 @@ function SignUp() {
         }
     });
 
-    /* const clearFieldError = (fieldName: keyof SignUpFormData, value: string) => {
-        setValue(fieldName, value);
-        clearErrors(fieldName);
-    } */
-
     const clearFieldError = (fieldName: keyof SignUpFormData, value: string | boolean) => {
         setValue(fieldName, value);
         clearErrors(fieldName);
-    }
-
-    const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
-        console.log(data); // Handle form submission here
-        closeDialgue()
     };
 
-    const router = useRouter()
-    const dialogueRef = useRef<null | HTMLDialogElement>(null)
+    const onSubmit: SubmitHandler<SignUpFormData> = async (data) => {
+        setErrorMessage(null);
+        try {
+            // Create a user with email and password
+            const res = await createUserWithEmailAndPassword(auth, data.emailAddress, data.password);
+            await updateProfile(res.user, { displayName: data.fullName });
+            const idToken = await res.user.getIdToken();
+    
+            // Make a POST request to the API route
+            const response = await fetch('/api/signUp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ idToken }),
+            });
+    
+            if (response.ok) {
+                dispatch(toggleAuthState());
+                closeDialgue();
+            } else {
+                throw new Error('Failed to create session');
+            }
+        } catch (error) {
+            console.error(error);
+            setErrorMessage('An unexpected error occurred. Please try again.');
+        }
+    };
+    
 
+    const router = useRouter();
+    const dialogueRef = useRef<null | HTMLDialogElement>(null);
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     useEffect(() => {
-        if (showDialogue && showDialogue === 'y') dialogueRef.current?.showModal()
-        else dialogueRef.current?.close()
-    }, [showDialogue])
+        if (showDialogue && showDialogue === 'y') dialogueRef.current?.showModal();
+        else dialogueRef.current?.close();
+    }, [showDialogue]);
 
     const closeDialgue = () => {
-        dialogueRef.current?.close()
-        const currentParams = new URLSearchParams(window.location.search)
-        currentParams.delete('signup')
-        const newUrl = `${window.location.pathname}?${currentParams.toString()}`
-        router.replace(newUrl)
-        reset()
-    }
+        dialogueRef.current?.close();
+        const currentParams = new URLSearchParams(window.location.search);
+        currentParams.delete('signup');
+        const newUrl = `${window.location.pathname}?${currentParams.toString()}`;
+        router.replace(newUrl);
+        setErrorMessage(null);
+        reset();
+    };
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
-    }
+    };
 
     return (
         <dialog ref={dialogueRef} className="overflow-hidden px-3">
@@ -71,16 +105,15 @@ function SignUp() {
                 <div className="max-w-[500px] mx-auto p-5 bg-secondary rounded overflow-y-auto max-h-[90vh]">
                     <div>
                         <div className="flex items-center gap-10 justify-between">
-                            <h3 className="text-primary">
-                                Sign Up
-                            </h3>
-                            <CloseModal closeDialgue={closeDialgue} />
+                            <h3 className="text-primary">Sign Up</h3>
+                            <CloseModal closeDialogue={closeDialgue} />
                         </div>
                         <p className="text-[14px] mt-3 text-primary">
                             Create an account to get full access to your personalized tutor and take practice tests.
                         </p>
                         <div className='mt-6'>
                             <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
+                                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                                 <div className="grid gap-5">
                                     <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
                                         <label htmlFor="fullName" className="text-primary">
@@ -98,7 +131,7 @@ function SignUp() {
                                         />
                                         <p className="text-[12px] text-red-600">{errors?.fullName?.message}</p>
                                     </div>
-                                    
+
                                     <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
                                         <label htmlFor="emailAddress" className="text-primary">
                                             Email Address
@@ -119,7 +152,7 @@ function SignUp() {
                                         />
                                         <p className="text-[12px] text-red-600">{errors?.emailAddress?.message}</p>
                                     </div>
-                                    
+
                                     <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
                                         <label htmlFor="password" className="text-primary">
                                             Password
@@ -149,7 +182,7 @@ function SignUp() {
                                         </div>
                                         <p className="text-[12px] text-red-600">{errors?.password?.message}</p>
                                     </div>
-                                    
+
                                     <div>
                                         <div className="flex items-center gap-2">
                                             <input 
@@ -169,12 +202,17 @@ function SignUp() {
 
                                     <button
                                         type="submit"
-                                        className="btn-primary group flex justify-center items-center gap-2 mt-1"
+                                        disabled={isSubmitting}
+                                        className={`btn-primary group flex justify-center items-center gap-2 mt-1 ${isSubmitting && 'hover:bg-black cursor-not-allowed'}`}
                                     >
-                                        Sign Up
-                                        <div className="gro group-hover:translate-x-1 transition-all duration-150">
-                                            <Arrow width={24} />
-                                        </div>
+                                        {isSubmitting ? <CircularProgress size={20} /> : 
+                                            <>
+                                                Sign Up
+                                                <div className="gro group-hover:translate-x-1 transition-all duration-150">
+                                                    <Arrow width={24} />
+                                                </div>
+                                            </>
+                                        }
                                     </button>
                                 </div>
 
@@ -185,8 +223,7 @@ function SignUp() {
                 </div>
             </div>
         </dialog>
-
     )
 }
 
-export default SignUp
+export default SignUp;
