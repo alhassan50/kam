@@ -9,6 +9,7 @@ import LogIn from "./components/shared/LogIn";
 import SignUp from "./components/shared/SignUp";
 import { Suspense } from "react";
 import Spinner from "./components/shared/Spinner";
+import LogOut from "./components/shared/LogOut";
 
 const poppins = Poppins({ 
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
         <Suspense fallback={<div className="h-full w-full"><Spinner /></div>}>
           <ReduxProvider>
             <LogIn />
+            <LogOut />
             <SignUp />
             <Header />
             <div className="flex flex-col md:flex-row overflow-x-hidden h-full overflow-y-hidden">
