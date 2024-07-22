@@ -30,7 +30,7 @@ function ProfileContainer() {
   }, [isProfileMenuOpened]);
 
   return (
-    <div ref={profileRef} className='relative h-full'>
+    <div ref={profileRef} className='relative h-full flex justify-center items-center'>
       <Profile toggleProfileMenu={toggleProfileMenu} />
 
       {isProfileMenuOpened && (
