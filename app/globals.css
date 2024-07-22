@@ -6,6 +6,8 @@
   --primary-color: #171717;
   --secondary-color: #fff;
   --tertiary-color: #eee;
+  
+  --border-color: #eee;
 
   --side-bar-bg: #fafafa;
   --hover-primary-color: #eee;
@@ -25,6 +27,7 @@
 :root[data-theme='dark'] {
   --primary-color: #fff;
   --secondary-color: #171717;
+  --border-color: #6d6d6d;
   
   --side-bar-bg: #171717;
   --hover-primary-color: #212121;
@@ -108,6 +111,14 @@ body {
   }
   .active-link figure {
     @apply scale-125
+  }
+  
+  .active-link .stroke-svg path {
+    @apply stroke-white
+  }
+  
+  .active-link .fill-svg path {
+    @apply fill-white
   }
 
   .width-transition {
