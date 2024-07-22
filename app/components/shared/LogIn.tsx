@@ -1,20 +1,31 @@
 'use client'
 
-import { useEffect, useRef, useState, Suspense } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import CloseModal from "../my-tutor/CloseModal"
+import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import CloseModal from "../my-tutor/CloseModal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Arrow from "../shared/Arrow";
 import Link from "next/link";
+import { Alert, CircularProgress } from "@mui/material"; // Assuming you're using Material UI for alerts
+import { useDispatch } from "react-redux";
+import { toggleAuthState } from "@/app/redux/slices/authSlice";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/app/firebase/firebaseClient";
+
+type LogInFormData = {
+    logInEmailAddress: string;
+    logInPassword: string;
+};
 
 function LogIn() {
-    const searchParams = useSearchParams()
-    const showDialogue = searchParams.get('login')
+    const searchParams = useSearchParams();
+    const showDialogue = searchParams.get('login');
+    const dispatch = useDispatch();
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
         setValue,
         clearErrors,
         reset
@@ -30,32 +41,61 @@ function LogIn() {
         clearErrors(fieldName);
     }
 
-    const onSubmit: SubmitHandler<LogInFormData> = (data) => {
-        console.log(data); // Handle form submission here
+    const onSubmit: SubmitHandler<LogInFormData> = async (data) => {
+        setErrorMessage(null);
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, data.logInEmailAddress, data.logInPassword);
+            const idToken = await userCredential.user.getIdToken();
+
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ idToken })
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Login successful:', result);
+                reset();
+                dispatch(toggleAuthState());
+                closeDialogue();
+            } else {
+                const errorData = await response.json();
+                console.error('Login error:', errorData.error);
+                setErrorMessage(errorData.error);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+            setErrorMessage('An unexpected error occurred. Please try again.');
+        }
     };
 
-    const router = useRouter()
-    const dialogueRef = useRef<null | HTMLDialogElement>(null)
+    const router = useRouter();
+    const dialogueRef = useRef<null | HTMLDialogElement>(null);
 
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        if (showDialogue && showDialogue === 'y') dialogueRef.current?.showModal()
-        else dialogueRef.current?.close()
-    }, [showDialogue])
+        if (showDialogue && showDialogue === 'y') dialogueRef.current?.showModal();
+        else dialogueRef.current?.close();
+    }, [showDialogue]);
 
-    const closeDialgue = () => {
-        dialogueRef.current?.close()
-        const currentParams = new URLSearchParams(window.location.search)
-        currentParams.delete('login')
-        const newUrl = `${window.location.pathname}?${currentParams.toString()}`
-        router.replace(newUrl)
-        reset()
-    }
+    const closeDialogue = () => {
+        dialogueRef.current?.close();
+        const currentParams = new URLSearchParams(window.location.search);
+        currentParams.delete('login');
+        const newUrl = `${window.location.pathname}?${currentParams.toString()}`;
+        router.replace(newUrl);
+        setErrorMessage(null);
+        reset();
+    };
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
-    }
+    };
 
     return (
         <dialog ref={dialogueRef}>
@@ -66,13 +106,14 @@ function LogIn() {
                             <h3 className="text-primary">
                                 Log in
                             </h3>
-                            <CloseModal closeDialgue={closeDialgue} />
+                            <CloseModal closeDialogue={closeDialogue} />
                         </div>
                         <p className="text-[14px] mt-3 text-primary">
                             Please log in for full access to your personalized tutor and take practice tests.
                         </p>
                         <div className='mt-6'>
                             <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
+                                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                                 <div className="grid gap-5">
                                     <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
                                         <label htmlFor="logInEmailAddress" className="text-primary">
@@ -85,8 +126,8 @@ function LogIn() {
                                             {...register("logInEmailAddress", {
                                                 required: "Your email address is required",
                                                 pattern: {
-                                                value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-                                                message: "Please enter a valid email address"
+                                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+                                                    message: "Please enter a valid email address"
                                                 }
                                             })}
                                             id="logInEmailAddress"
@@ -107,8 +148,8 @@ function LogIn() {
                                                 {...register("logInPassword", {
                                                     required: "Your password is required",
                                                     pattern: {
-                                                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
-                                                    message: "Your password must contain at least 8 characters including numbers and letters or special characters"
+                                                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
+                                                        message: "Your password must contain at least 8 characters including numbers and letters or special characters"
                                                     }
                                                 })}
                                                 id="logInPassword"
@@ -127,12 +168,17 @@ function LogIn() {
 
                                     <button
                                         type="submit"
-                                        className="btn-primary group flex justify-center items-center gap-2 mt-1"
+                                        disabled={isSubmitting}
+                                        className={`btn-primary group flex justify-center items-center gap-2 mt-1 ${isSubmitting && 'hover:bg-black cursor-not-allowed'}`}
                                     >
-                                        Log In
-                                        <div className="gro group-hover:translate-x-1 transition-all duration-150">
-                                            <Arrow width={24} />
-                                        </div>
+                                        {isSubmitting ? <CircularProgress size={20} /> : 
+                                            <>
+                                                Log In
+                                                <div className="group-hover:translate-x-1 transition-all duration-150">
+                                                    <Arrow width={24} />
+                                                </div>
+                                            </>
+                                        }
                                     </button>
                                 </div>
 
@@ -143,7 +189,7 @@ function LogIn() {
                 </div>
             </div>
         </dialog>
-    )
+    );
 }
 
-export default LogIn
+export default LogIn;
