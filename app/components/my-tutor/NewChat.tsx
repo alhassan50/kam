@@ -46,7 +46,7 @@ function NewChat() {
                             </p>
                         </div>
 
-                        <div className="h-[] my-3 grid gap-2">
+                        {/* <div className="h-[] my-3 grid gap-2">
                             <SlidesDropzone className="border hover:bg-hoverPrimary cursor-pointer text-primary border- border-dashed border-primary rounded p-5 text-center" />
 
                             <div className="relative text-center">
@@ -57,7 +57,7 @@ function NewChat() {
                             </div>
 
                            <SlidesDescription />
-                        </div>
+                        </div> */}
 
                         <div className="flex justify-end gap-1 flex-col sm:flex-row">
                             <button 
