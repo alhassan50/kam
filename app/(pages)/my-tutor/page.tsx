@@ -50,8 +50,9 @@ function MyTutor({ setSelectedChat }: { setSelectedChat: (chat: any) => void }) 
           // Prepare form data for file upload
           const formData = new FormData();
           formData.append('file', file);
-
-          const response = await fetch('/api/extract-text', {
+          console.log('going');
+          
+          const response = await fetch('/api/extractFile', {
             method: 'POST',
             body: formData,
           });
@@ -101,7 +102,7 @@ function MyTutor({ setSelectedChat }: { setSelectedChat: (chat: any) => void }) 
   }
 
   return (
-    <div className="p-0 flex justify-center items-center">
+    <div className="p-0 flex justify-center items-center overflow-y-auto">
       <div className="p-5 bg-[var(--dialogue-primary)] rounded max-w-[600px]">
         <div>
           <div>
