@@ -34,7 +34,7 @@ export async function generateMetadata(
     const chat = await getChat(slideId);
     
     if (chat) {
-      title = chat.slideName || 'My Tutor';
+      title = chat.slideName || slideId;
     } else {
       title = 'My Tutor';
     }
