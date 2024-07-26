@@ -20,6 +20,10 @@
   
   --active-text: var(--secondary-color);
 
+  --chat-bubble: #f4f4f4;
+
+  --dialogue-primary: #f4f4f4;
+
   --hover-card: #f9f9f9;
   --bg-card: rgba(0,0,0,0.1);
 }
@@ -38,6 +42,10 @@
   --btn-primary-hover: hsl(0,0%,4%);
 
   --active-text: var(--primary-color);
+
+  --dialogue-primary: #171717;
+  
+  --chat-bubble: #2f2f2f;
 
   --hover-card: #2f2f2f;
   --bg-card: rgba(255,255,255,0.2);
