@@ -10,6 +10,10 @@ import SignUp from "./components/shared/SignUp";
 import { Suspense } from "react";
 import Spinner from "./components/shared/Spinner";
 import LogOut from "./components/shared/LogOut";
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+
+TimeAgo.addDefaultLocale(en);
 
 const poppins = Poppins({ 
   subsets: ["latin"],
