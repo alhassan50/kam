@@ -10,7 +10,6 @@ import Link from "next/link";
 function AuthWrapper() {
   const authState = useSelector(selectisLoggedIn);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-  console.log('rendering');
 
   useEffect(() => {
     setIsLoggedIn(null);
