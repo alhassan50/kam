@@ -4,7 +4,6 @@ import Logo from './Logo'
 import Profile from './Profile'
 import ProfileContainer from './ProfileContainer'
 import Link from 'next/link'
-import Auth from './Auth'
 import AuthWrapper from './AuthWrapper'
 
 function Header() {
