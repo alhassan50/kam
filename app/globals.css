@@ -109,6 +109,10 @@ body {
   .btn-primary {
     @apply bg-black py-4 rounded-[4px] text-[#fff] hover:bg-[var(--btn-primary-hover)] transition-all duration-150
   }
+
+  .btn-primary-disabled {
+    @apply bg-[#555555] py-4 rounded-[4px] text-[#fff] transition-all duration-150
+  }
   
   .btn-ghost {
     @apply bg-transparent py-4 rounded-[4px] text-[#000]
