@@ -46,13 +46,20 @@ function LogIn() {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, data.logInEmailAddress, data.logInPassword);
             const idToken = await userCredential.user.getIdToken();
+            const user = {
+                uid: userCredential.user.uid,
+                email: userCredential.user.email,
+                displayName: userCredential.user.displayName,
+                photoURL: userCredential.user.photoURL,
+                phoneNumber: userCredential.user.phoneNumber
+            };
 
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ idToken })
+                body: JSON.stringify({ idToken, user })
             });
 
             if (response.ok) {
