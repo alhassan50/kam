@@ -74,7 +74,6 @@ export default function Layout({ children }: { children: ReactElement }) {
 
   return (
     <>
-      <NewChatWrapper />
       <main className="h-full w-full relative flex flex-col px-0 overflow-hidden">
         <div className="mb-4 sticky top-0 px-4 inline-block">
           <div className="flex gap-2">
