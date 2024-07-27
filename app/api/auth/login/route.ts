@@ -4,7 +4,7 @@ import { initAdmin } from '@/app/firebase/firebaseAdmin';
 
 export async function POST(request: NextRequest) {
     try {
-        const {idToken} = await request.json();
+        const { idToken, user } = await request.json();
 
         const admin = await initAdmin();
         const decodedToken = await admin.auth().verifyIdToken(idToken);
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
         const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn });
 
-        const options = {
+        const sessionOptions = {
             name: 'session',
             value: sessionCookie,
             maxAge: expiresIn,
@@ -21,22 +21,27 @@ export async function POST(request: NextRequest) {
             path: '/',
         };
 
-        const response = NextResponse.json({ session: sessionCookie });
-        response.cookies.set(options);
+        const userOptions = {
+            name: 'user',
+            value: JSON.stringify(user),
+            maxAge: expiresIn,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+        };
+
+
+        console.log(userOptions);
+        
+
+        const response = NextResponse.json({ message: 'Login successful' });
+
+        response.cookies.set(sessionOptions);
+        response.cookies.set(userOptions);
 
         return response;
     } catch (error) {
-        if (error instanceof yup.ValidationError) {
-            // Handle validation errors
-            const validationErrors = error.inner.reduce((acc, curr) => {
-                if (curr.path) {
-                    acc[curr.path] = curr.message;
-                }
-                return acc;
-            }, {} as { [key: string]: string });
-            return NextResponse.json({ error: "Invalid email or password" }, { status: 400 });
-        }
-        console.error('Error processing login:', error);
-        return NextResponse.json({ error: 'Failed to create session' }, { status: 500 });
+        console.error('Error during login:', error);
+        return NextResponse.json({ error: 'Login failed' }, { status: 401 });
     }
 }
