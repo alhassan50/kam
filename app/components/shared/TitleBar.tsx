@@ -1,10 +1,11 @@
 'use client'
 import { usePathname } from 'next/navigation';
 import { navLinks } from '@/app/data/navLinks';
+import { validLinks } from '@/app/data/validLinks';
 
 function TitleBar() {
   const pathname = usePathname();
-  const activeNavLink = navLinks.find(link => link.href === pathname);
+  const activeNavLink = navLinks.find(link => link.href === pathname) || validLinks.find(link => link.href === pathname);
 
   let nestedActiveLink = null;
 
