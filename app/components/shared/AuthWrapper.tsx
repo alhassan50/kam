@@ -22,16 +22,16 @@ function AuthWrapper() {
     checkAuth();
   }, [authState]);
 
-  useEffect(() => {
+/*   useEffect(() => {
     console.log("isLoggedIn::::::::", isLoggedIn);
-  }, [isLoggedIn]);
+  }, [isLoggedIn]); */
   
   return (
     <>
       {
-        isLoggedIn === null ? <CircularProgress size={16} /> 
+        isLoggedIn === null ? <CircularProgress color='inherit' size={16} /> 
           : isLoggedIn ? <ProfileContainer /> 
-            : <Link href="?login=y" className="hover:underline text-sm"> Log In </Link>
+            : <Link href="/login" className="hover:underline text-sm"> Log In </Link>
       }
     </>
   )
