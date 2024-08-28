@@ -1,4 +1,5 @@
-// ChatInterface.tsx
+'use client'
+
 import React, { useRef, useEffect } from 'react';
 import LoadChatBubble from './LoadChatBubble';
 import { ChatMessage } from './ChatWrapper';

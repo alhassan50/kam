@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import SlidesDropzone from '@/app/components/my-tutor/SlidesDropzone';
 import SlidesDescription from '@/app/components/my-tutor/SlidesDescription';
 
@@ -44,22 +45,18 @@ function NewChat() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('/api/extractText', {
-        method: 'POST',
-        body: formData,
+      const response = await axios.post('/api/extractText', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to extract text from file.');
-      }
-
-      const result = await response.json();
-      //console.log('Extracted text:', result.text);
+      const result = response.data;
 
       // Create chapter with extracted text
       const fileNameWithoutExtension = removeFileExtension(file.name);
       await createChapter(result.text, fileNameWithoutExtension);
-    } catch (error: any) {
+    } catch (error) {
       setStatus(null);
       console.error('Error extracting text:', error);
       setError('Failed to extract text. Please try again.');
@@ -69,19 +66,16 @@ function NewChat() {
   const createChapter = async (description: string, name: string) => {
     setStatus('Uploading...');
     try {
-      const response = await fetch('/api/createChapter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ description, name }),
+      const response = await axios.post('/api/createChapter', {
+        description,
+        name,
       });
 
-      const result = await response.json();
+      const result = response.data;
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         setError(result.error);
-        setStatus(null)
+        setStatus(null);
         return;
       }
 
@@ -91,7 +85,7 @@ function NewChat() {
       setStatus('Redirecting...');
       const encodedSlideId = encodeURIComponent(result.slide.slideId);
       router.push(`/my-tutor/${encodedSlideId}`);
-    } catch (error: any) {
+    } catch (error) {
       setStatus(null);
       console.error('Error creating chapter:', error);
       setError('Failed to create chapter. Please try again.');
@@ -138,7 +132,7 @@ function NewChat() {
 
             <div className="h-[] my-3 grid gap-2">
               <SlidesDropzone
-                className="border hover:bg-hoverPrimary cursor-pointer text-primary border- border-dashed border-primary rounded p-5 text-center"
+                className="border hover:bg-hoverPrimary cursor-pointer text-primary border-dashed border-primary rounded p-5 text-center"
                 onDrop={handleFileDrop}
                 clearError={clearError}
               />
@@ -159,13 +153,6 @@ function NewChat() {
             </div>
 
             <div className="flex justify-end gap-1 flex-col sm:flex-row">
-              {/* <button
-                type='button'
-                className='bg-ghost text-primary px-4 py-2 font-medium rounded-[4px] hover:bg-hoverPrimary text-[12px]'
-              >
-                Continue without slides
-              </button> */}
-
               <button
                 type='button'
                 className={`bg-primary text-secondary px-4 py-2 font-medium rounded-[4px] text-[12px] ${loading && 'cursor-not-allowed'}`}
