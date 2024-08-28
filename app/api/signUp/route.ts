@@ -8,7 +8,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     idToken = body.idToken;
   } catch (error) {
-    console.log('1::::', error)
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
 
@@ -33,7 +32,6 @@ export async function POST(request: Request) {
 
     return response;
   } catch (error) {
-    console.log('2::::', error)
     return NextResponse.json({ error: 'Failed to create session' }, { status: 401 });
   }
 }

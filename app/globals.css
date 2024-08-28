@@ -6,6 +6,7 @@
   --primary-color: #171717;
   --secondary-color: #fff;
   --tertiary-color: #eee;
+  --primsec: #f4f4f4;
   
   --border-color: #eee;
 
@@ -32,6 +33,7 @@
   --primary-color: #fff;
   --secondary-color: #171717;
   --border-color: #6d6d6d;
+  --primsec: #171717;
   
   --side-bar-bg: #171717;
   --hover-primary-color: #212121;

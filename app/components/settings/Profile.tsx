@@ -6,6 +6,8 @@ import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import ProfilePicture from '@/app/components/settings/ProfilePicture';
 import ProfileInfo from '@/app/components/settings/ProfileInfo';
 import CircularProgress from '@mui/material/CircularProgress';
+import AccountInfoSkeleton from './AccountInfoSkeleton';
+import { auth } from '@/app/firebase/firebaseClient';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -13,7 +15,6 @@ const Profile = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
@@ -26,17 +27,9 @@ const Profile = () => {
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return <CircularProgress />;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!user) {
-    return <div>User not found</div>;
-  }
+  if (loading) return <AccountInfoSkeleton />;
+  if (error) return <div>{error}</div>;
+  if (!user) return <div>User not found</div>;
 
   return (
     <div>

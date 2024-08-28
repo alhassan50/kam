@@ -6,8 +6,9 @@ import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import Spinner from '@/app/components/shared/Spinner';
 import ChatNav from '@/app/components/my-tutor/ChatNav';
 import AddNewChatButton from '@/app/components/my-tutor/AddNewChatButton';
-import LayoutError from '@/app/components/my-tutor/LayoutError';
+import LayoutError from '@/app/components/shared/LayoutError';
 import NewChatWrapper from '@/app/components/my-tutor/NewChatWrapper';
+import { auth } from '@/app/firebase/firebaseClient';
 
 type ChatItem = {
   id: string;
@@ -21,7 +22,6 @@ export default function Layout({ children }: { children: ReactElement }) {
   const [error, setError] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const auth = getAuth();
     const db = getFirestore();
     let unsubscribeAuth: () => void;
     let unsubscribeChatList: () => void;

@@ -8,7 +8,9 @@ export const metadata: Metadata = {
 function MyTutor() {
   //throw new Error()
   return (
-    <NewChat />
+    <div className="px-2">
+      <NewChat />
+    </div>
   )
 }
 

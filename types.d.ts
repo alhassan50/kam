@@ -49,6 +49,7 @@ type Feature = {
     title: string;
     description: string;
     link: null | string;
+    image: string
 }
 
 type LogInFormData = {

@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import Profile from './Profile';
 import Link from 'next/link';
 import { menuItems } from '@/app/data/profileMenuItems';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/app/firebase/firebaseClient'; // Import the initialized auth
+import { onAuthStateChanged } from 'firebase/auth';
 import { CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectHasAccountInfoChanged } from '@/app/redux/slices/accountInfoSlice';
@@ -37,7 +38,6 @@ function ProfileContainer() {
   }, [isProfileMenuOpened]);
 
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser({ displayName: user.displayName || '', email: user.email || '' });
@@ -59,8 +59,11 @@ function ProfileContainer() {
           <div>
             {
               loading ? 
-              (<div className='flex justify-center items-center py-2'>
-                  <CircularProgress />
+              (<div className='grid gap-[10px] py-2'>
+                  {/* <CircularProgress size={24} color='inherit' /> */}
+                  <span className='w-full max-w-[150px] bg-gray-300 opacity-10 animate-pulse h-[8px] rounded-lg'></span>
+                  <span className='w-full max-w-[200px] bg-gray-300 opacity-10 animate-pulse h-[8px] rounded-lg'></span>
+                  <hr className='my-1 border border-[var(--bg-card)]' />
                 </div>)
                 : 
               (<div>

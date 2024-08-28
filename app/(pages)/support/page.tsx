@@ -3,7 +3,7 @@ import MoMoPaymentMethods from "../../components/donate/MoMoPaymentMethods";
 import DonateForm from "../../components/donate/DonateForm";
 
 export const metadata: Metadata = {
-  title: 'Donate',
+  title: 'Support',
 };
 
 function Donate() {

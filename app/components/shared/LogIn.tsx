@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import CloseModal from "../my-tutor/CloseModal";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -17,10 +17,14 @@ type LogInFormData = {
     logInPassword: string;
 };
 
-function LogIn() {
+function LogIn({ closeModal }: { closeModal?: () => void }) {
     const searchParams = useSearchParams();
-    const showDialogue = searchParams.get('login');
+    const redirectUrl = searchParams.get('redirect');
     const dispatch = useDispatch();
+    const router = useRouter();
+    const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+
+    console.log(closeModal);    
 
     const {
         register,
@@ -64,10 +68,19 @@ function LogIn() {
 
             if (response.ok) {
                 const result = await response.json();
-                console.log('Login successful:', result);
+                //console.log('Login successful:', result);
                 reset();
+                setIsRedirecting(true);
+                
+                if (closeModal) closeModal();
+
+                if (redirectUrl) {
+                    router.replace(redirectUrl);
+                } else {
+                    router.back();
+                }
+
                 dispatch(toggleAuthState());
-                closeDialogue();
             } else {
                 const errorData = await response.json();
                 console.error('Login error:', errorData.error);
@@ -78,124 +91,131 @@ function LogIn() {
             setErrorMessage('An unexpected error occurred. Please try again.');
         }
     };
-
-    const router = useRouter();
-    const dialogueRef = useRef<null | HTMLDialogElement>(null);
+    
 
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (showDialogue && showDialogue === 'y') dialogueRef.current?.showModal();
-        else dialogueRef.current?.close();
-    }, [showDialogue]);
-
     const closeDialogue = () => {
-        dialogueRef.current?.close();
-        const currentParams = new URLSearchParams(window.location.search);
-        currentParams.delete('login');
-        const newUrl = `${window.location.pathname}?${currentParams.toString()}`;
-        router.replace(newUrl);
+        if (closeModal) closeModal();
         setErrorMessage(null);
         reset();
+        router.back();
     };
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
 
+    const goToSignUp= () => {
+        router.replace('/signup');
+    }
+
+    useEffect(() => {
+        // Any additional logic based on isRedirecting
+    }, [isRedirecting]);
+
     return (
-        <dialog ref={dialogueRef}>
-            <div className="login blur-bg-4 backdrop-blur-sm fixed overflow-y-auto py-20 px-2 flex justify-center items-center w-screen min-h-screen top-0 left-0 bg-[var(--modal-bg)] z-[100000000000]">
-                <div className="max-w-[500px] mx-auto p-5 bg-secondary rounded">
-                    <div>
-                        <div className="flex items-center gap-10 justify-between">
-                            <h3 className="text-primary">
-                                Log in
-                            </h3>
-                            <CloseModal closeDialogue={closeDialogue} />
+        <div className="flex justify-center items-center w-full">
+            <div className="max-w-[500px] mx-auto p-5 bg-secondary rounded">
+                {
+                    isRedirecting 
+                     ?  <div className="text-primary text-center">
+                            <CircularProgress color="inherit" />
+                            <p>Hang tight! We are redirecting you</p>
                         </div>
-                        <p className="text-[14px] mt-3 text-primary">
-                            Please log in for full access to your personalized tutor and take practice tests.
-                        </p>
-                        <div className='mt-6'>
-                            <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
-                                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-                                <div className="grid gap-5">
-                                    <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
-                                        <label htmlFor="logInEmailAddress" className="text-primary">
-                                            Email Address
-                                        </label>
-                                        <input 
-                                            type="email"
-                                            placeholder="abc@gmail.com"
-                                            className={`px-5 py-2 border-[var(--bg-card)] border min-w-0 rounded-[4px]`}
-                                            {...register("logInEmailAddress", {
-                                                required: "Your email address is required",
-                                                pattern: {
-                                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-                                                    message: "Please enter a valid email address"
-                                                }
-                                            })}
-                                            id="logInEmailAddress"
-                                            onChange={(e) => clearFieldError("logInEmailAddress", e.target.value)}
-                                        />
-                                        <p className="text-[12px] text-red-600">{errors?.logInEmailAddress?.message}</p>
-                                    </div>
-                                    
-                                    <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
-                                        <label htmlFor="logInPassword" className="text-primary">
-                                            Password
-                                        </label>
-                                        <div className="relative">
+                     :  <div>
+                            <div className="flex items-center gap-10 justify-between">
+                                <h3 className="text-primary">
+                                    Log in
+                                </h3>
+                                {closeModal && <CloseModal closeDialogue={closeDialogue} />}
+                            </div>
+                            <p className="text-[14px] mt-3 text-primary">
+                                Please log in for full access to your personalized tutor and take practice tests.
+                            </p>
+                            <div className='mt-6'>
+                                <form className="grid gap-5" onSubmit={handleSubmit(onSubmit)}>
+                                    {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+                                    <div className="grid gap-5">
+                                        <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
+                                            <label htmlFor="logInEmailAddress" className="text-primary">
+                                                Email Address
+                                            </label>
                                             <input 
-                                                type={passwordVisible ? "text" : "password"}
-                                                placeholder="At least 8 characters"
-                                                className={`px-5 py-2 border-[var(--bg-card)] border min-w-0 rounded-[4px] w-full`}
-                                                {...register("logInPassword", {
-                                                    required: "Your password is required",
+                                                type="email"
+                                                placeholder="abc@gmail.com"
+                                                className={`px-5 py-2 border-[var(--bg-card)] border min-w-0 rounded-[4px]`}
+                                                {...register("logInEmailAddress", {
+                                                    required: "Your email address is required",
                                                     pattern: {
-                                                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
-                                                        message: "Your password must contain at least 8 characters including numbers and letters or special characters"
+                                                        value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+                                                        message: "Please enter a valid email address"
                                                     }
                                                 })}
-                                                id="logInPassword"
-                                                onChange={(e) => clearFieldError("logInPassword", e.target.value)}
+                                                id="logInEmailAddress"
+                                                onChange={(e) => clearFieldError("logInEmailAddress", e.target.value)}
                                             />
-                                            <button
-                                                type="button"
-                                                onClick={togglePasswordVisibility}
-                                                className="absolute inset-y-0 right-0 flex items-center px-2 text-[14px] text-gray-600"
-                                            >
-                                                {passwordVisible ? "Hide" : "Show"}
-                                            </button>
+                                            <p className="text-[12px] text-red-600">{errors?.logInEmailAddress?.message}</p>
                                         </div>
-                                        <p className="text-[12px] text-red-600">{errors?.logInPassword?.message}</p>
+                                        
+                                        <div className="grid grid-flow-row gap-1 min-w-0 text-[14px]">
+                                            <label htmlFor="logInPassword" className="text-primary">
+                                                Password
+                                            </label>
+                                            <div className="relative">
+                                                <input 
+                                                    type={passwordVisible ? "text" : "password"}
+                                                    placeholder="At least 8 characters"
+                                                    className={`px-5 py-2 border-[var(--bg-card)] border min-w-0 rounded-[4px] w-full`}
+                                                    {...register("logInPassword", {
+                                                        required: "Your password is required",
+                                                        pattern: {
+                                                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/,
+                                                            message: "Your password must contain at least 8 characters including numbers and letters or special characters"
+                                                        }
+                                                    })}
+                                                    id="logInPassword"
+                                                    onChange={(e) => clearFieldError("logInPassword", e.target.value)}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={togglePasswordVisibility}
+                                                    className="absolute inset-y-0 right-0 flex items-center px-2 text-[14px] text-gray-600"
+                                                >
+                                                    {passwordVisible ? "Hide" : "Show"}
+                                                </button>
+                                            </div>
+                                            <p className="text-[12px] text-red-600">{errors?.logInPassword?.message}</p>
+                                        </div>
+        
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            className={`btn-primary group flex justify-center items-center gap-2 mt-1 ${isSubmitting && 'hover:bg-black cursor-not-allowed'}`}
+                                        >
+                                            {isSubmitting ? <CircularProgress color='inherit' size={20} /> : 
+                                                <>
+                                                    Log In
+                                                    <div className="group-hover:translate-x-1 transition-all duration-150">
+                                                        <Arrow width={24} />
+                                                    </div>
+                                                </>
+                                            }
+                                        </button>
                                     </div>
 
-                                    <button
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        className={`btn-primary group flex justify-center items-center gap-2 mt-1 ${isSubmitting && 'hover:bg-black cursor-not-allowed'}`}
-                                    >
-                                        {isSubmitting ? <CircularProgress size={20} /> : 
-                                            <>
-                                                Log In
-                                                <div className="group-hover:translate-x-1 transition-all duration-150">
-                                                    <Arrow width={24} />
-                                                </div>
-                                            </>
-                                        }
-                                    </button>
-                                </div>
-
-                                <p className="text-[12px] text-primary text-center">Don&apos;t have an account? <Link href={'?signup=y'} className="underline">Sign up</Link></p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                                    {
+                                        closeModal 
+                                            ? <p className="text-[12px] text-primary text-center">Don&apos;t have an account? <button type="button" onClick={() => goToSignUp()} className="underline">Sign up</button></p>
+                                            : <p className="text-[12px] text-primary text-center">Already have an account? <Link href={'/signup'} className="underline">Log in</Link></p> 
+                                    }
+                                </form>
+                            </div>
+                        </div> 
+                }
             </div>
-        </dialog>
+        </div>
     );
 }
 

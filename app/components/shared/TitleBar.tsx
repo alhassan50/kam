@@ -10,12 +10,15 @@ function TitleBar() {
   let nestedActiveLink = null;
 
   if (!activeNavLink) {
+    // Updated Regex for handling nested dynamic routes under practice-exam
     const myTutorRegex = /^\/my-tutor\/.*/;
-    // Special case for /my-tutor dynamic routes
-    if (pathname.match(myTutorRegex)) {
+    const practiceExamRegex = /^\/practice-exam(\/.*)?$/; // Updated regex for deeper dynamic routes
+
+    if (pathname.match(myTutorRegex) || pathname.match(practiceExamRegex)) {
       // Extract the dynamic part from the pathname
       const parts = pathname.split('/');
-      nestedActiveLink = parts[2]; // Adjust index based on your routing structure
+      nestedActiveLink = parts.slice(2).join(' : '); // Adjusted for multi-level paths
+      nestedActiveLink = nestedActiveLink.replace('mcq', 'MCQ')
     }
   }
 

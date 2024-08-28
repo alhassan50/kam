@@ -28,18 +28,18 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children, auth
 }: Readonly<{
+  auth: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Suspense fallback={<div className="h-full w-full"><Spinner /></div>}>
+        <Suspense fallback={<div className="h-full w-full bg-red-700"><Spinner /></div>}>
           <ReduxProvider>
-            <LogIn />
+            <div>{auth}</div>
             <LogOut />
-            <SignUp />
             <Header />
             <div className="flex flex-col md:flex-row overflow-x-hidden h-full overflow-y-hidden">
               <SideBar />

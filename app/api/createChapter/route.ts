@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { initAdmin } from '@/app/firebase/firebaseAdmin';
 import { v4 as uuidv4 } from 'uuid';
 import { FieldValue } from 'firebase-admin/firestore'; // Import FieldValue directly
+import { encoding_for_model } from 'tiktoken';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,8 +22,23 @@ export async function POST(request: NextRequest) {
     const decodedToken = await admin.auth().verifySessionCookie(sessionCookie.value, true);
     const uid = decodedToken.uid;
 
+    if (!uid) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     // Parse the request body
     const { description, name } = await request.json();
+
+    const enc = encoding_for_model("gpt-4");
+    const tokens = enc.encode(description);
+    const tokenCount = tokens.length;
+
+    console.log("tokenCounttokenCount::::", tokenCount);
+    
+
+    if (tokenCount > 15000) {
+      return NextResponse.json({ error: 'Slide content is too large.' }, { status: 400 });
+    }
     
     if (!description || description.trim().length === 0) {
       return NextResponse.json({ error: 'Invalid description content' }, { status: 400 });

@@ -29,7 +29,9 @@ export async function POST(request: NextRequest) {
     const uid = decodedToken.uid;
 
     // Parse the request body
-    const { slideId, chatMessage } = await request.json();
+    const { slideId, chatMessage, role } = await request.json();
+
+    //if (role === 'assistant') return NextResponse.json({ error: 'User not found' }, { status: 404 });
 
     if (!slideId || slideId.trim().length === 0) {
       return NextResponse.json({ error: 'Invalid slideId' }, { status: 400 });
@@ -56,7 +58,7 @@ export async function POST(request: NextRequest) {
     }
 
     const newChat: Chat = {
-      role: 'user',
+      role,
       content: chatMessage,
       id: uuidv4(),
       timeCreated: new Date().toISOString(),

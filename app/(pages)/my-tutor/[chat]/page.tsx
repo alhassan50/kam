@@ -1,18 +1,12 @@
 import ChatInterface from "@/app/components/my-tutor/ChatInterface"
+import ChatWrapper from "@/app/components/my-tutor/ChatWrapper"
 import TextArea from "@/app/components/my-tutor/TextArea"
 import { getChat } from "@/app/serverActions/getChat"
 import { Metadata } from "next"
 
-function Chat({ params }: { params: { chat: string } }) {
+async function Chat({ params }: { params: { chat: string } }) {
   return (
-    <div className="p-0 h-full flex flex-col flex-1 overflow-hidden">
-      <div className="flex-1 overflow-auto">
-        <ChatInterface slideId={params.chat} />
-      </div>
-      <div className="w-full p-3 pb-0  bottom-0 mx-auto">
-        <TextArea slideId={params.chat} />
-      </div>
-    </div>
+    <ChatWrapper slideId={params.chat} />
   )
 }
 

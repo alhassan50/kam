@@ -4,15 +4,60 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import Spinner from '@/app/components/shared/Spinner'; // Adjust the path as needed
-import LayoutError from '@/app/components/my-tutor/LayoutError'; // Adjust the path as needed
-import { Alert } from '@mui/material';
+import LayoutError from '@/app/components/shared/LayoutError'; // Adjust the path as needed
+import { Alert, CircularProgress } from '@mui/material';
 import Bin from './Bin';
 import Edit from './Edit';
+import Check from './Check';
+import Cross from './Cross';
+import ChatListSkeleton from './ChatListSkeleton';
+import Link from 'next/link';
+import { auth } from '@/app/firebase/firebaseClient';
 
 type ChatItem = {
   id: string;
   title: string;
   dateModified: string;
+};
+
+const DeleteConfirmationModal = ({
+  onConfirm,
+  onCancel,
+  show,
+  loading,
+}: {
+  onConfirm: () => void;
+  onCancel: () => void;
+  show: boolean;
+  loading: boolean;
+}) => {
+  if (!show) return null;
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center z-[1000000000] bg-[var(--modal-bg)] backdrop-blur-[4px] blur-bg-4">
+      <div className="bg-secondary p-6 rounded shadow-lg">
+        <h3 className="mb-5">Are you sure you want to delete this slide?</h3>
+        <div className="flex justify-end gap-2">
+          <button
+            type="button"
+            className={`px-4 py-2 rounded text-[14px] ${loading ? 'bg-gray-300 text-black cursor-not-allowed' : 'bg-gray-300 text-black'}`}
+            onClick={onCancel}
+            disabled={loading}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className={`px-4 py-2 rounded text-[14px] ${loading ? 'bg-red-500 cursor-not-allowed' : 'bg-red-500'}`}
+            onClick={onConfirm}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={14} color="inherit" /> : 'Confirm'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const ChatList = () => {
@@ -24,9 +69,14 @@ const ChatList = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [originalValues, setOriginalValues] = useState<{ [key: string]: string }>({});
   const inputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
+  const [savingId, setSavingId] = useState<string | null>(null); // ID of the slide being saved
+  const [editMode, setEditMode] = useState<string | null>(null); // ID of the slide in edit mode
+
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [slideIdToDelete, setSlideIdToDelete] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const auth = getAuth();
     const db = getFirestore();
     let unsubscribeAuth: () => void;
     let unsubscribeChatList: () => void;
@@ -43,7 +93,7 @@ const ChatList = () => {
             const simplifiedChatList = chatListData.map((chat: any) => ({
               id: chat.slideId,
               title: chat.slideName,
-              dateModified: chat.dateModified
+              dateModified: chat.dateModified,
             }));
 
             setChatList(simplifiedChatList);
@@ -81,32 +131,35 @@ const ChatList = () => {
   }, []);
 
   const handleEdit = (id: string) => {
-    if (editingId && editingId !== id) {
+    if (editMode && editMode !== id) {
       // Revert changes for the previously edited item
-      const inputElement = inputRefs.current[editingId];
+      const inputElement = inputRefs.current[editMode];
       if (inputElement) {
-        inputElement.value = originalValues[editingId] || '';
+        inputElement.value = originalValues[editMode] || '';
       }
     }
-    setEditingId(id);
+    setEditMode(id);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async () => {
+    if (!slideIdToDelete) return;
+
+    setDeleting(true); // Set the deleting state to show the loader
     try {
       const response = await fetch('/api/deleteSlide', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ slideId: id }),
+        body: JSON.stringify({ slideId: slideIdToDelete }),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        console.log('Slide deleted successfully:', result);
+        //console.log('Slide deleted successfully:', result);
         // Update the chat list after deletion
-        setChatList((prevList) => prevList.filter((item) => item.id !== id));
+        setChatList((prevList) => prevList.filter((item) => item.id !== slideIdToDelete));
         setSlideUpdateError(null); // Nullify the error state
         setUpdateSuccess('Slide deleted successfully!');
       } else {
@@ -118,53 +171,56 @@ const ChatList = () => {
       console.error('Error deleting slide:', error);
       setUpdateSuccess(null); // Nullify the success state
       setSlideUpdateError('An error occurred while deleting the slide.');
+    } finally {
+      setDeleting(false); // Reset the deleting state to hide the loader
+      setShowDeletePopup(false); // Close the popup
+      setSlideIdToDelete(null); // Reset the slide ID to be deleted
     }
   };
 
-  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>, id: string) => {
-    if (e.key === 'Enter') {
-      const inputElement = inputRefs.current[id];
-      if (inputElement) {
-        const updatedName = inputElement.value;
+  const handleSave = async (id: string) => {
+    setSavingId(id);
 
-        try {
-          // Call the API to update slide name
-          const response = await fetch('/api/updateSlideName', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ slideId: id, updatedName }),
-          });
+    const inputElement = inputRefs.current[id];
+    if (inputElement) {
+      const updatedName = inputElement.value;
 
-          const result = await response.json();
+      try {
+        // Call the API to update slide name
+        const response = await fetch('/api/updateSlideName', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ slideId: id, updatedName }),
+        });
 
-          if (response.ok) {
-            console.log('Slide name updated:', result);
-            setSlideUpdateError(null); // Nullify the error state
-            setUpdateSuccess('Slide name updated successfully!');
-            setEditingId(null); // Exit editing mode
-          } else {
-            console.error('Failed to update slide name:', result.error);
-            inputElement.value = originalValues[id] || ''; // Revert to original value
-            setUpdateSuccess(null); // Nullify the success state
-            setSlideUpdateError(result.error);
-            setEditingId(null); // Exit editing mode
-          }
-        } catch (error) {
-          console.error('Error updating slide name:', error);
-          setUpdateSuccess(null); // Nullify the success state
-          setSlideUpdateError('An error occurred while updating the slide name.');
-          inputElement.value = originalValues[id] || ''; // Revert to original value
-          setEditingId(null); // Exit editing mode
+        const result = await response.json();
+
+        if (response.ok) {
+          //console.log('Slide name updated:', result);
+          setSlideUpdateError(null);
+          setUpdateSuccess('Slide name updated successfully!');
+          setEditMode(null);
+          setSavingId(null);
+        } else {
+          console.error('Failed to update slide name:', result.error);
+          inputElement.value = originalValues[id] || '';
+          setUpdateSuccess(null);
+          setSlideUpdateError(result.error);
+          setEditMode(null);
+          setSavingId(null);
         }
-      }
-    } else if (e.key === 'Escape') {
-      const inputElement = inputRefs.current[id];
-      if (inputElement) {
+      } catch (error) {
+        console.error('Error updating slide name:', error);
+        setUpdateSuccess(null);
+        setSlideUpdateError('An error occurred while updating the slide name.');
         inputElement.value = originalValues[id] || '';
+        setEditMode(null);
+        setSavingId(null);
       }
-      setEditingId(null); // Exit editing mode
+    } else {
+      setSavingId(null);
     }
   };
 
@@ -183,7 +239,7 @@ const ChatList = () => {
     }
   }, [editingId]);
 
-  if (loading) return <Spinner />;
+  if (loading) return <ChatListSkeleton />;
   if (error) return <LayoutError errorType='default' />;
 
   return (
@@ -203,42 +259,87 @@ const ChatList = () => {
         </div>
       )}
       <h2 className="mb-4">Manage Your Uploads</h2>
-      <ul className='grid gap-4'>
-        {chatList.map((slide) => (
-          <li key={slide.id} className='flex gap-6 justify-between items-center'>
-            <input
-              ref={setRef(slide.id)}
-              title='Slide Title'
-              type="text"
-              defaultValue={slide.title}
-              disabled={editingId !== slide.id}
-              className="px-4 py-2 border-[var(--bg-card)] w-full text-base rounded-[4px]"
-              readOnly={editingId !== slide.id} // Make the input editable only when editing
-              onKeyDown={(e) => handleKeyDown(e, slide.id)}
-            />
-            <div className='flex gap-2'>
-              <button
-                type="button"
-                title="edit button"
-                className='w-10 h-10 p-3 bg-tertiary rounded-md'
-                onClick={() => handleEdit(slide.id)}
-              >
-                <Edit />
-              </button>
-              <button
-                type="button"
-                title="delete button"
-                className='w-10 h-10 p-3 bg-red-500 rounded-md'
-                onClick={() => handleDelete(slide.id)}
-              >
-                <Bin />
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {chatList.length === 0 ? (
+        <p className="italic text-left">You don&apos;t have any slides. <Link href={'/my-tutor'} className='underline'>Click here</Link> to upload some slides!</p>
+      ) : (
+        <ul className='grid gap-4'>
+          {chatList.map((slide) => (
+            <li key={slide.id} className='flex gap-6 justify-between items-center'>
+              <input
+                ref={setRef(slide.id)}
+                title='Slide Title'
+                type="text"
+                defaultValue={slide.title}
+                disabled={editMode !== slide.id}
+                className="px-4 py-2 border-[var(--bg-card)] w-full text-[14px] rounded-[4px]"
+                readOnly={editMode !== slide.id}
+              />
+              <div className='flex gap-2'>
+                {editMode === slide.id ? (
+                  <>
+                    <button
+                      type="button"
+                      title="okay button"
+                      className='w-10 h-10 p-3 bg-green-500 rounded-md flex justify-center items-center'
+                      onClick={() => handleSave(slide.id)}
+                      disabled={savingId === slide.id}
+                    >
+                      {savingId === slide.id ? <CircularProgress size={14} color='inherit' /> : <Check />}
+                    </button>
+                    <button
+                      type="button"
+                      title="cancel button"
+                      className='w-10 h-10 p-3 bg-gray-500 rounded-md flex justify-center items-center'
+                      onClick={() => {
+                        setEditMode(null); // Exit edit mode without saving
+                        const inputElement = inputRefs.current[slide.id];
+                        if (inputElement) {
+                          inputElement.value = originalValues[slide.id] || '';
+                        }
+                      }}
+                   
+                      >
+                      <Cross />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      title="edit button"
+                      className='w-10 h-10 p-3 bg-tertiary rounded-md'
+                      onClick={() => handleEdit(slide.id)}
+                    >
+                      <Edit />
+                    </button>
+                    <button
+                      type="button"
+                      title="delete button"
+                      className='w-10 h-10 p-3 bg-red-500 rounded-md'
+                      onClick={() => {
+                        setShowDeletePopup(true);
+                        setSlideIdToDelete(slide.id);
+                      }}
+                    >
+                      <Bin />
+                    </button>
+                  </>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+      <DeleteConfirmationModal
+        show={showDeletePopup}
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeletePopup(false)}
+        loading={deleting}
+      />
     </div>
   );
 };
 
 export default ChatList;
+
+      
