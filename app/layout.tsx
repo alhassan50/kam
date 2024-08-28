@@ -9,6 +9,11 @@ import LogIn from "./components/shared/LogIn";
 import SignUp from "./components/shared/SignUp";
 import { Suspense } from "react";
 import Spinner from "./components/shared/Spinner";
+import LogOut from "./components/shared/LogOut";
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+
+TimeAgo.addDefaultLocale(en);
 
 const poppins = Poppins({ 
   subsets: ["latin"],
@@ -23,17 +28,18 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children, auth
 }: Readonly<{
+  auth: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Suspense fallback={<div className="h-full w-full"><Spinner /></div>}>
+        <Suspense fallback={<div className="h-full w-full bg-red-700"><Spinner /></div>}>
           <ReduxProvider>
-            <LogIn />
-            <SignUp />
+            <div>{auth}</div>
+            <LogOut />
             <Header />
             <div className="flex flex-col md:flex-row overflow-x-hidden h-full overflow-y-hidden">
               <SideBar />

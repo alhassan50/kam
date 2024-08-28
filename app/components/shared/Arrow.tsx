@@ -9,7 +9,7 @@ function Arrow({width, applyColortheme}: {width: number, applyColortheme?: boole
     >
         <defs>
         <style>
-            {`.cls-1{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}`}
+            {`.cls-1{fill:none;strokeLinecap:round;strokeLinejoin:round;strokeWidth:2px;}`}
         </style>
         </defs>
         <g id="arrow-right">

@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Arrow from "../shared/Arrow"
 import Link from "next/link"
 
@@ -21,8 +22,16 @@ const Hero = () => (
           </div>
       </Link>
 
-      <figure className="relative rounded h-[500px] mt-10 overflow-hidden">
-        <div className="bg-[#0000008f] rounded-lg h-full w-full max-w-[1000px] mx-auto"></div>
+      <figure className="relative mt-10 overflow-hidden max-w-[900px] mx-auto">
+        {/* <div className="bg-[#0000008f] rounded-lg h-full w-full max-w-[1000px] mx-auto"></div> */}
+        {/* <Image alt='hero' src={'/assets/images/hero.png'} width={1000} height={1000} /> */}
+        <Image 
+          alt='hero' 
+          src={'/assets/images/hero.png'} 
+          width={1000}
+          height={1000}
+          className="h-full w-full rounded-lg" 
+        />
       </figure>
     </section>
   )

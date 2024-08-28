@@ -17,7 +17,7 @@ type ContactFormData = {
 type Link = {
     title: string;
     href: string;
-    icon: string;
+    icon: JSX.Element;
 }
 
 type ContactInfo = {
@@ -49,6 +49,7 @@ type Feature = {
     title: string;
     description: string;
     link: null | string;
+    image: string
 }
 
 type LogInFormData = {
