@@ -1,4 +1,5 @@
 import { testimonials } from "@/app/data/testimonials"
+import Image from "next/image"
 
 const Testimonial = () => (
     <section className='text-center md:w-[90%] mx-auto grid gap-3'>
@@ -15,7 +16,15 @@ const Testimonial = () => (
                 {testimonial.feedback}
               </p>
               <div className="flex gap-3 mt-5">
-                <figure className="w-14 h-14 bg-black rounded-[50%]"></figure>
+                <figure className=" bg-black rounded-[50%] overflow-hidden">
+                    <Image
+                    alt={testimonial.image} 
+                    src={`/assets/images/${testimonial.image}`} 
+                    width={500}
+                    height={500}
+                    className="h-16 w-full mx-auto" 
+                  />
+                </figure>
                 <div>
                   <h3 className="text-left">
                     {testimonial.name}

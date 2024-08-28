@@ -1,38 +1,33 @@
-'use client'
+'use client';
 
 import React, { useState, useCallback } from 'react';
 import { useDropzone, FileRejection } from 'react-dropzone';
 import SlidesPrview from './SlidesPrview';
 
-function SlidesDropzone({ className }: { className: string }) {
+function SlidesDropzone({ className, onDrop, clearError }: { className: string, onDrop: (acceptedFiles: File[]) => void, clearError: () => void }) {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const maxFiles = 1; // Maximum number of files allowed
 
-  const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
+  const handleDrop = useCallback((acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
+    clearError(); // Clear the error when a file is dropped
     setError(null);
     if (acceptedFiles.length === 0) {
       setError(`You can only upload up to ${maxFiles} file(s). Supported files include PPT, DOCX, PDF, and TXT.`);
       return;
     }
 
-    // Handle the accepted files
-    console.log("Accepted files:", acceptedFiles);
-
-    // Handle the rejected files
-    console.log("Rejected files:", rejectedFiles);
-
     // Only accept the first file
     if (acceptedFiles.length > 0) {
       setFile(acceptedFiles[0]);
-      console.log("Accepted file:", acceptedFiles[0]);
+      onDrop(acceptedFiles); // Pass the accepted files to the parent component
     } else {
-      setError(`Error.`);
+      setError('Error.');
     }
-  }, []);
+  }, [onDrop, clearError]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
+    onDrop: handleDrop,
     maxFiles,
     accept: {
       'application/pdf': [],
@@ -64,10 +59,10 @@ function SlidesDropzone({ className }: { className: string }) {
 
       <small className='text-red-500 text-[10px]'>{error && error}</small>
 
-      {(file && !error) && (
-        <SlidesPrview 
-          fileName={file.name} 
-          fileType={formatFileType(file.type)} 
+      {file && !error && (
+        <SlidesPrview
+          fileName={file.name}
+          fileType={formatFileType(file.type)}
           fileSize={(file.size / 1024).toFixed(2)} />
       )}
     </div>

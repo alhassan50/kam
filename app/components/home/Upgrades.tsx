@@ -1,4 +1,5 @@
 import { upgrades } from "@/app/data/upgrades"
+import Image from "next/image"
 
 const Upgrades = () => (
     <section className="md:w-[90%] mx-auto grid gap-3">
@@ -8,10 +9,16 @@ const Upgrades = () => (
 
       <ul className="grid gap-5 mt-8 md:grid-cols-2 lg:grid-cols-3">
         {upgrades.map(upgrade => (
-          <li key={upgrade.title}>
+          <li key={upgrade.title} className="group">
             <div>
-              <figure className="h-60 w-full bg-black rounded">
-
+              <figure className="h-60 w-full bg-black rounded overflow-hidden">
+                <Image
+                  alt={upgrade.image} 
+                  src={`/assets/images/${upgrade.image}`} 
+                  width={500}
+                  height={500}
+                  className="h-full w-full mx-auto group-hover:scale-110 duration-300" 
+                />
               </figure>
 
               <div>

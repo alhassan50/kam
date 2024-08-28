@@ -6,6 +6,9 @@
   --primary-color: #171717;
   --secondary-color: #fff;
   --tertiary-color: #eee;
+  --primsec: #f4f4f4;
+  
+  --border-color: #eee;
 
   --side-bar-bg: #fafafa;
   --hover-primary-color: #eee;
@@ -18,6 +21,10 @@
   
   --active-text: var(--secondary-color);
 
+  --chat-bubble: #f4f4f4;
+
+  --dialogue-primary: #f4f4f4;
+
   --hover-card: #f9f9f9;
   --bg-card: rgba(0,0,0,0.1);
 }
@@ -25,6 +32,8 @@
 :root[data-theme='dark'] {
   --primary-color: #fff;
   --secondary-color: #171717;
+  --border-color: #6d6d6d;
+  --primsec: #171717;
   
   --side-bar-bg: #171717;
   --hover-primary-color: #212121;
@@ -35,6 +44,10 @@
   --btn-primary-hover: hsl(0,0%,4%);
 
   --active-text: var(--primary-color);
+
+  --dialogue-primary: #171717;
+  
+  --chat-bubble: #2f2f2f;
 
   --hover-card: #2f2f2f;
   --bg-card: rgba(255,255,255,0.2);
@@ -98,6 +111,10 @@ body {
   .btn-primary {
     @apply bg-black py-4 rounded-[4px] text-[#fff] hover:bg-[var(--btn-primary-hover)] transition-all duration-150
   }
+
+  .btn-primary-disabled {
+    @apply bg-[#555555] py-4 rounded-[4px] text-[#fff] transition-all duration-150
+  }
   
   .btn-ghost {
     @apply bg-transparent py-4 rounded-[4px] text-[#000]
@@ -108,6 +125,14 @@ body {
   }
   .active-link figure {
     @apply scale-125
+  }
+  
+  .active-link .stroke-svg path {
+    @apply stroke-white
+  }
+  
+  .active-link .fill-svg path {
+    @apply fill-white
   }
 
   .width-transition {

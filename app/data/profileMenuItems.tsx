@@ -1,6 +1,6 @@
 export const menuItems = [
     {
-      href: '#myprofile',
+      href: '/settings',
       svg: (
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -49,7 +49,7 @@ export const menuItems = [
       label: 'Terms of use',
     },
     {
-      href: '/',
+      href: '?logout=y',
       svg: (
         <svg
           xmlns='http://www.w3.org/2000/svg'

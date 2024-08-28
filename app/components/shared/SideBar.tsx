@@ -17,7 +17,7 @@ function SideBar() {
   };
 
   return (
-    <div className={`${isSideBarOpened ? 'w-[250px] border-r' : 'w-[0px] lg:w-[85px] border-r-0 lg:border-r'} fixed overflow-hidden h-[calc(100vh-53px)] bg-sideBarBg width-transition z-50`}>
+    <div className={`${isSideBarOpened ? 'w-[250px] border-r border-r-[var(--border-color)]' : 'w-[0px] lg:w-[85px] border-r-0 lg:border-r lg:border-r-[var(--border-color)]'} fixed overflow-hidden h-[calc(100vh-53px)] bg-sideBarBg width-transition z-50`}>
       <div className={`w-[250px] h-full bg-sideBarBg pt-2`}>
         <ul className=''>
           {navLinks.map(link => (

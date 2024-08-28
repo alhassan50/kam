@@ -5,7 +5,7 @@ import Testimonial from "./components/home/Testimonial";
 import Upgrades from "./components/home/Upgrades";
 
 export const metadata: Metadata = {
-  title: 'Home | KAM',
+  title: 'Home',
 };
 
 export default function Home() {

@@ -1,19 +1,16 @@
+import NewChat from "@/app/components/my-tutor/NewChat";
 import { Metadata } from "next";
-import DefaultChatInterface from "@/app/components/my-tutor/DefaultChatInterface";
 
 export const metadata: Metadata = {
-  title: 'Tutor',
+  title: 'My Tutor',
 };
 
-async function MyTutor() {
-  //await new Promise((resolve) => setTimeout(resolve, 5000))
-
+function MyTutor() {
+  //throw new Error()
   return (
-    <>
-      <div className="p-0 h-full flex justify-center items-center">
-        <DefaultChatInterface />
-      </div>
-    </>
+    <div className="px-2">
+      <NewChat />
+    </div>
   )
 }
 

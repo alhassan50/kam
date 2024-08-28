@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Arrow from "../shared/Arrow"
 import { features } from "@/app/data/features"
+import Image from "next/image"
 
 const AboutKam = () => (
     <section className='grid gap-3'>
@@ -21,7 +22,7 @@ const AboutKam = () => (
 
       <ul className="grid gap-20 mt-10 lg:w-[90%] mx-auto">
         {features.map((feature, index) => (
-          <li key={feature.title} className={`grid sm:grid-cols-2 gap-10`}>
+          <li key={feature.title} className={`grid sm:grid-cols-2 gap-10 justify-between`}>
             <div className={`text-left ${index%2 === 0 ? 'sm:order-1' : 'sm:order-2'}`}>
               <h2 className="">
                 {feature.title}
@@ -41,8 +42,14 @@ const AboutKam = () => (
                 </Link>
               }
             </div>
-            <figure className={`text-left ${index%2 === 0 ? 'sm:order-2' : 'sm:order-1'}`}>
-              <div className="bg-[#0000008f] rounded-lg h-[300px] w-full max-w-[1000px] mx-auto"></div>
+            <figure className={`text-left max-w-[500px] ${index%2 === 0 ? 'sm:order-2' : 'sm:order-1'}`}>
+              <Image
+                alt={feature.image} 
+                src={`/assets/images/${feature.image}`} 
+                width={500}
+                height={500}
+                className="h-full w-full mx-auto rounded-lg" 
+              />
             </figure>
           </li>
         ))}

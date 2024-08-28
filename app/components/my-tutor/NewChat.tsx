@@ -1,84 +1,185 @@
 'use client'
 
-import { useEffect, useRef } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import SlidesDropzone from "./SlidesDropzone"
-import CloseModal from "./CloseModal"
-import SlidesDescription from "./SlidesDescription"
+import React, { useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import SlidesDropzone from '@/app/components/my-tutor/SlidesDropzone';
+import SlidesDescription from '@/app/components/my-tutor/SlidesDescription';
+
+// Utility function to remove file extension
+const removeFileExtension = (fileName: string): string => {
+  return fileName.replace(/\.[^/.]+$/, "");
+};
 
 function NewChat() {
-    const searchParams = useSearchParams()
-    const showDialogue = searchParams.get('isNewChat')
+  const [file, setFile] = useState<File | null>(null);
+  const [description, setDescription] = useState<string>('');
+  const [paragraphName, setParagraphName] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
 
-    const router = useRouter()
+  const router = useRouter(); // Initialize the router
 
-    const dialogueRef = useRef<null | HTMLDialogElement>(null)
+  const clearError = () => setError(null);
 
-    useEffect(()=>{
-        if (showDialogue && showDialogue === 'y') dialogueRef.current?.showModal()
-        else dialogueRef.current?.close()
-    }, [showDialogue])
-    
-    const closeDialgue = () => {
-        dialogueRef.current?.close()
-        // Remove 'isNewChat' from the URL without navigating away
-        const currentParams = new URLSearchParams(window.location.search)
-        currentParams.delete('isNewChat')
-        const newUrl = `${window.location.pathname}?${currentParams.toString()}`
-        router.replace(newUrl)
+  const handleFileDrop = useCallback((acceptedFiles: File[]) => {
+    clearError(); // Clear the error when a file is dropped
+    if (acceptedFiles.length > 0) {
+      setFile(acceptedFiles[0]);
     }
+  }, []);
 
-    return (
-        <dialog ref={dialogueRef}>
-            <div className="blur-bg-4 backdrop-blur-sm fixed overflow-y-auto py-20 px-2 flex justify-center items-center w-screen min-h-screen top-0 left-0 bg-[var(--modal-bg)] z-[100000000000]">
-                <div className="p-5 bg-secondary rounded max-w-[600px]">
-                    <div>
-                        <div>
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-primary">
-                                    New Chat
-                                </h3>
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(event.target.value);
+  };
 
-                                <CloseModal closeDialgue={closeDialgue} />
-                            </div>
-                            <p className="text-[12px] mt-2 text-primary">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro dicta repudiandae officiis sapiente hic minus voluptatem quia minima distinctio.
-                            </p>
-                        </div>
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setParagraphName(event.target.value);
+  };
 
-                        <div className="h-[] my-3 grid gap-2">
-                            <SlidesDropzone className="border hover:bg-hoverPrimary cursor-pointer text-primary border- border-dashed border-primary rounded p-5 text-center" />
+  const uploadFile = async (file: File) => {
+    setStatus('Extracting...');
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
 
-                            <div className="relative text-center">
-                                <hr className="absolute top-[50%] w-full translate-y-[50%] left-0 z-10" />
-                                <p className="px-3 text-[12px] bg-secondary z-20 inline-block relative text-primary">
-                                    OR
-                                </p>
-                            </div>
+      const response = await fetch('/api/extractText', {
+        method: 'POST',
+        body: formData,
+      });
 
-                           <SlidesDescription />
-                        </div>
+      if (!response.ok) {
+        throw new Error('Failed to extract text from file.');
+      }
 
-                        <div className="flex justify-end gap-1 flex-col sm:flex-row">
-                            <button 
-                                type='button'
-                                className='bg-ghost text-primary px-4 py-2 font-medium rounded-[4px] hover:bg-hoverPrimary text-[12px]'
-                            >
-                                Continue without slides
-                            </button>
+      const result = await response.json();
+      //console.log('Extracted text:', result.text);
 
-                            <button 
-                                type='button'
-                                className='bg-primary text-secondary px-4 py-2 font-medium rounded-[4px] text-[12px]'
-                            >
-                                Upload slides
-                            </button>
-                        </div>
-                    </div>
-                </div>
+      // Create chapter with extracted text
+      const fileNameWithoutExtension = removeFileExtension(file.name);
+      await createChapter(result.text, fileNameWithoutExtension);
+    } catch (error: any) {
+      setStatus(null);
+      console.error('Error extracting text:', error);
+      setError('Failed to extract text. Please try again.');
+    }
+  };
+
+  const createChapter = async (description: string, name: string) => {
+    setStatus('Uploading...');
+    try {
+      const response = await fetch('/api/createChapter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ description, name }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setError(result.error);
+        setStatus(null)
+        return;
+      }
+
+      console.log(result);
+      setSuccess(true);
+      setError(null);
+      setStatus('Redirecting...');
+      const encodedSlideId = encodeURIComponent(result.slide.slideId);
+      router.push(`/my-tutor/${encodedSlideId}`);
+    } catch (error: any) {
+      setStatus(null);
+      console.error('Error creating chapter:', error);
+      setError('Failed to create chapter. Please try again.');
+    }
+  };
+
+  const handleUploadClick = async () => {
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    if (file && (description || paragraphName)) {
+      setError('Please upload either a file or input slides description, not both.');
+      setLoading(false);
+    } else if (!file && !description) {
+      setError('Please provide either a file or slides description.');
+      setLoading(false);
+    } else {
+      if (file) {
+        await uploadFile(file);
+      } else {
+        await createChapter(description, paragraphName);
+      }
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className='overflow-y-auto h-full py-10'>
+      <div className="p-0 flex justify-center items-center ">
+        <div className="sm:p-5 sm:bg-[var(--dialogue-primary)] sm:rounded max-w-[600px]">
+          <div>
+            <div>
+              <div className="flex items-center justify-between">
+                <h3 className="text-primary">New Chat</h3>
+              </div>
+              <p className="text-[12px] mt-2 text-primary">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro dicta repudiandae officiis sapiente hic minus voluptatem quia minima distinctio.
+              </p>
             </div>
-        </dialog>
-    )
+
+            {error && <small className='text-red-500 text-[10px] my-1 inline-block'>{error}</small>}
+            {success && <small className='text-green-500 text-[10px] my-1 inline-block'>Slide uploaded successfully!</small>}
+
+            <div className="h-[] my-3 grid gap-2">
+              <SlidesDropzone
+                className="border hover:bg-hoverPrimary cursor-pointer text-primary border- border-dashed border-primary rounded p-5 text-center"
+                onDrop={handleFileDrop}
+                clearError={clearError}
+              />
+
+              <div className="relative text-center">
+                <hr className="absolute top-[50%] w-full translate-y-[50%] left-0 z-10" />
+                <p className="px-3 text-[12px] bg-[var(--primsec)] z-20 inline-block relative text-primary">
+                  OR
+                </p>
+              </div>
+
+              <SlidesDescription
+                onChange={handleDescriptionChange}
+                clearError={clearError}
+                onNameChange={handleNameChange}
+                name={paragraphName}
+              />
+            </div>
+
+            <div className="flex justify-end gap-1 flex-col sm:flex-row">
+              {/* <button
+                type='button'
+                className='bg-ghost text-primary px-4 py-2 font-medium rounded-[4px] hover:bg-hoverPrimary text-[12px]'
+              >
+                Continue without slides
+              </button> */}
+
+              <button
+                type='button'
+                className={`bg-primary text-secondary px-4 py-2 font-medium rounded-[4px] text-[12px] ${loading && 'cursor-not-allowed'}`}
+                onClick={handleUploadClick}
+                disabled={loading}
+              >
+                {status || 'Upload slides'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default NewChat
+export default NewChat;
