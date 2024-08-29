@@ -1,6 +1,4 @@
-import React from 'react'
-
-async function DefaultChatInterface() {
+function DefaultChatInterface() {
   //await new Promise((resolve) => setTimeout(resolve, 5000))
 
   return (

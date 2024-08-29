@@ -74,7 +74,7 @@ export default function Layout({ children }: { children: ReactElement }) {
 
   return (
     <>
-      <main className="h-full w-full relative flex flex-col px-0 overflow-hidden">
+      <main className="h-full w-full relative flex flex-col px-0 overflow-hidden ">
         <div className="mb-4 sticky top-0 px-4 inline-block">
           <div className="flex gap-2">
             <ChatNav chatList={chatList} />
@@ -82,7 +82,7 @@ export default function Layout({ children }: { children: ReactElement }) {
           </div>
         </div>
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="h-full text-sm overflow-hidden">
+          <div className="h-full text-sm overflow-hidden overflow-y-auto">
             {children}
           </div>
         </div>

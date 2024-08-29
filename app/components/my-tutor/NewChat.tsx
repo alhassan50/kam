@@ -123,7 +123,7 @@ function NewChat() {
                 <h3 className="text-primary">New Chat</h3>
               </div>
               <p className="text-[12px] mt-2 text-primary">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro dicta repudiandae officiis sapiente hic minus voluptatem quia minima distinctio.
+                Engage in a new conversation or continue where you left off. Share your thoughts, ideas, or questions, and let&apos;s explore together. Upload a presentation slide, or simply type your message to get started.
               </p>
             </div>
 
