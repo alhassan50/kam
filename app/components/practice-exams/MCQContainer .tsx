@@ -29,6 +29,9 @@ const MCQContainer = ({ questions }: MCQContainerProps) => {
   const [isQuizCompleted, setIsQuizCompleted] = useState(false);
   const [showHint, setShowHint] = useState(false); // State to control hint visibility
 
+  console.log("questionsquestionsquestionsquestions: ", questions);
+  
+
   const currentQuestion = questions[currentQuestionIndex];
 
   const handleAnswerSelect = (answer: string) => {
